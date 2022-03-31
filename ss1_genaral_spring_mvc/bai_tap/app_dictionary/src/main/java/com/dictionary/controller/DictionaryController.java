@@ -13,6 +13,7 @@ public class DictionaryController {
     @Autowired
     private IDictionary iDictionary;
 
+
     @GetMapping("/")
     public String delivery() {
 
