@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface IPictureRepository {
-    public List<Picture> getAllList();
+
+    public void insert(Picture picture);
+
 }

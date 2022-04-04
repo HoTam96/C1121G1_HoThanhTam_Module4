@@ -9,13 +9,15 @@ public class Picture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String commentt;
-    private Integer likee;
+    private Integer grade;
+    private String author;
+    private String feedBack;
 
-    public Picture(Integer id, String commentt, Integer likee) {
+    public Picture(Integer id, Integer grade, String author, String feedBack) {
         this.id = id;
-        this.commentt = commentt;
-        this.likee = likee;
+        this.grade = grade;
+        this.author = author;
+        this.feedBack = feedBack;
     }
 
     public Picture() {
@@ -29,21 +31,30 @@ public class Picture {
         this.id = id;
     }
 
-    public String getCommentt() {
-        return commentt;
+    public Integer getGrade() {
+        return grade;
     }
 
-    public void setCommentt(String commentt) {
-        this.commentt = commentt;
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
 
-    public Integer getLikee() {
-        return likee;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setLikee(Integer likee) {
-        this.likee = likee;
+    public void setAuthor(String author) {
+        this.author = author;
     }
+
+    public String getFeedBack() {
+        return feedBack;
+    }
+
+    public void setFeedBack(String feedBack) {
+        this.feedBack = feedBack;
+    }
+
 }
 //
 //    @Override
