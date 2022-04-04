@@ -9,6 +9,15 @@
             width: 700px;
             height: 400px;
         }
+        label{
+            font-weight: bold;
+            font-size: 20px;
+            color: red;
+
+        }
+        span{
+            font-size: 18px;
+        }
 
     </style>
 </head>
@@ -38,8 +47,8 @@
     <table>
         <tr th:each="i:  ${list}">
             <td>
-                <h4 th:text="${i.author}"></h4>
-                <h4 th:text="${i.feedBack}"></h4>
+            <label>tác giả :</label><span th:text="${i.author}"></span><br>
+                <label>comment:</label><span th:text="${i.feedBack}"></span>
             </td>
             <td>
                 <h4><span th:text="${i.numberLike}"></span> like</h4>
