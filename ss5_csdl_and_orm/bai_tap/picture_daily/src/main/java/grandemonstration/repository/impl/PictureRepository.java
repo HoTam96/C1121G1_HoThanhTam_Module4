@@ -21,4 +21,20 @@ public class PictureRepository implements IPictureRepository {
     public void insert(Picture picture) {
         entityManager.merge(picture);
     }
+
+    @Override
+    public List<Picture> getList() {
+        TypedQuery<Picture>pictureTypedQuery= entityManager.createQuery("select p from Picture p",Picture.class);
+        return pictureTypedQuery.getResultList();
+    }
+
+    @Override
+    public Picture getByid(Integer id) {
+        return entityManager.find(Picture.class, id);
+    }
+
+    @Override
+    public void update(Picture picture) {
+        entityManager.merge(picture);
+    }
 }

@@ -12,12 +12,14 @@ public class Picture {
     private Integer grade;
     private String author;
     private String feedBack;
+    private Integer numberLike;
 
-    public Picture(Integer id, Integer grade, String author, String feedBack) {
+    public Picture(Integer id, Integer grade, String author, String feedBack, Integer numberLike) {
         this.id = id;
         this.grade = grade;
         this.author = author;
         this.feedBack = feedBack;
+        this.numberLike = numberLike;
     }
 
     public Picture() {
@@ -55,6 +57,13 @@ public class Picture {
         this.feedBack = feedBack;
     }
 
+    public Integer getNumberLike() {
+        return numberLike;
+    }
+
+    public void setNumberLike(Integer numberLike) {
+        this.numberLike = numberLike;
+    }
 }
 //
 //    @Override

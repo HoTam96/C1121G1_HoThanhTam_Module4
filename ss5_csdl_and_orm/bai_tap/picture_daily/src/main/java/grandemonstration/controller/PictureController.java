@@ -6,13 +6,12 @@ import grandemonstration.repository.IPictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Parameter;
 import java.util.List;
 
 @Controller
@@ -27,23 +26,33 @@ public class PictureController {
     @GetMapping("")
     public ModelAndView getComment() {
         Picture picture = new Picture();
+        List<Picture> pictureList = iPictureRepository.getList();
         ModelAndView modelAndView = new ModelAndView("home", "picture", picture);
+        modelAndView.addObject("list",pictureList);
         return modelAndView;
 
     }
 
     @PostMapping("/create")
-    public String insertComment(@ModelAttribute("picture") Picture picture) {
+    public ModelAndView insertComment(@ModelAttribute("picture") Picture picture) {
+        picture.setNumberLike(0);
         iPictureRepository.insert(picture);
+        List<Picture> pictureList = iPictureRepository.getList();
+        ModelAndView modelAndView = new ModelAndView("home", "list", pictureList);
+        return modelAndView;
 
-        return "redirect:/picture";
+
     }
 
-//    @PostMapping("/like")
-//    public ModelAndView getLike(HttpSession session ){
-//
-//
-//    }
+    @GetMapping("/like/{id}")
+    public String getLike(@PathVariable("id")Integer id) {
+        Picture picture = iPictureRepository.getByid(id);
+        picture.setNumberLike(picture.getNumberLike()+1);
+        iPictureRepository.update(picture);
+        return "redirect:/picture";
+
+    }
+
 
 
 }

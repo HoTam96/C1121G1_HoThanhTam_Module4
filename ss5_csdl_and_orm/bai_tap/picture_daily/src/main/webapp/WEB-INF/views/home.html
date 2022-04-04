@@ -33,15 +33,22 @@
     </form>
 <p>---------------------------------------------------------</p>
     <p>những lượt comment trong ngày</p>
-    <form method="post" action="/picture/like">
+
+
     <table>
-        <tr>
-            <td><input></td>
-            <td>100 likes <span><input type="submit" value=" like"></span></td>
+        <tr th:each="i:  ${list}">
+            <td>
+                <h4 th:text="${i.author}"></h4>
+                <h4 th:text="${i.feedBack}"></h4>
+            </td>
+            <td>
+                <h4><span th:text="${i.numberLike}"></span> like</h4>
+                <a th:href="@{/picture/like/{id}(id=${i.id})}">like</a>
+            </td>
         </tr>
 
     </table>
-    </form>
+
 
 </div>
 </body>
