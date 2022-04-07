@@ -1,6 +1,7 @@
 package management.controller;
 
 import management.model.Product;
+import management.repository.IProductRepository;
 import management.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

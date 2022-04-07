@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Blog</title>
+    <style th:replace="/layout :: css_style"></style>
+    <th:block th:replace="/layout :: linkHead"/>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <form method="post" th:action="@{/user/save}" th:object="${userDto}">
+                <div class="modal-header">
+                    <h4 class="modal-title text-primary">Thêm mới user</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>First name</label>
+                        <input  type="text" class="form-control" th:field="*{firstName}"/>
+                        <span th:errors="*{firstName}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Last name</label>
+                        <input  type="text" class="form-control" th:field="*{lastName}"/>
+                        <span th:errors="*{lastName}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input  type="text" class="form-control" th:field="*{phone}"/>
+                        <span th:errors="*{phone}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>date of Birth</label>
+                        <input  type="date" class="form-control" th:field="*{dateOfBirth}"/>
+                        <span th:errors="*{dateOfBirth}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input  type="text" class="form-control" th:field="*{email}"/>
+                        <span th:errors="*{email}"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <a th:href="@{/user}" class="btn btn-dark">Huỷ</a>
+                        <input type="submit" class="btn btn-info" value="Thêm mới">
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="/layout :: footer"></footer>
+</body>
+<th:block th:replace="/layout::script"/>
+</html>

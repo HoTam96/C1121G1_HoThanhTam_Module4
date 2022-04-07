@@ -6,6 +6,7 @@ import com.example.model.Category;
 import com.example.model.FeedBack;
 import com.example.service.IBlogService;
 import com.example.service.ICategoryService;
+import com.example.service.IFeedBackService;
 import javafx.collections.transformation.FilteredList;
 import org.hibernate.engine.jdbc.BlobImplementer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,14 @@ public class BlogController {
     private IBlogService iBlogService;
     @Autowired
     private ICategoryService iCategoryService;
+    @Autowired
+    private IFeedBackService iFeedBackService;
 
     @GetMapping("/home")
-    public ModelAndView getBlog(@PageableDefault(value = 1)
+    public ModelAndView getBlog(@PageableDefault(value = 2)
                                         Pageable pageable,
                                 @RequestParam Optional<String> keyWord) {
-//        FeedBack feedBack = new FeedBack();
+//        Page<FeedBack> feedBackList = iFeedBackService.findAll(pageable);
 
         String keyWordValue = keyWord.orElse("");
         Page<BlogPicture> pictureList = iBlogService.findAll(keyWordValue, pageable);
@@ -40,7 +43,7 @@ public class BlogController {
         List<Category> categoryList = iCategoryService.findAll();
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("pictureList", pictureList);
-//        modelAndView.addObject("feedBack", feedBack);
+//        modelAndView.addObject("feedBackList", feedBackList);
         modelAndView.addObject("categoryList", categoryList);
         modelAndView.addObject("keyWord", keyWordValue);
         return modelAndView;
@@ -48,7 +51,7 @@ public class BlogController {
     }
 
     @GetMapping("/load/{id}")
-    public ModelAndView getCategory(@PageableDefault(value = 1)
+    public ModelAndView getCategory(@PageableDefault(value = 2)
                                             Pageable pageable, @PathVariable("id") Integer id) {
         FeedBack feedBack = new FeedBack();
 
@@ -101,7 +104,6 @@ public class BlogController {
     }
 
 //    phần comment
-
 
 
 }

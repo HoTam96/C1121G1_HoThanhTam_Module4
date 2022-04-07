@@ -1,10 +1,10 @@
-package management.service;
+package management.repository;
 
 import management.model.Product;
 
 import java.util.List;
 
-public interface IProductService {
+public interface IProductRepository {
 
     List<Product> getAllList();
 
@@ -17,5 +17,4 @@ public interface IProductService {
     void delete(Integer id);
 
     List<Product> search(String name);
-
 }
