@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Blog</title>
+    <style th:replace="/layout :: css_style"></style>
+    <th:block th:replace="/layout :: linkHead"/>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-6 mx-auto">
+<!--            <h2 style="color: deepskyblue ; text-align: center"  ></h2>-->
+            <form method="post" th:action="@{/bank/saveEit}" th:object="${bankDto}">
+                <div class="modal-header">
+                    <h4 class="modal-title text-primary">chỉnh sữa thông tin khách hàng</h4>
+                </div>
+                <div class="modal-body">
+                    <input hidden  type="text" class="form-control" th:field="*{id}"/>
+                    <div class="form-group">
+                        <label>mã sổ tiết kiệm</label>
+                        <input readonly  type="text" class="form-control" th:field="*{codeBank}"/>
+<!--                        <span th:errors="*{codeBank}"></span>-->
+                    </div>
+                    <div class="form-group">
+                        <label>ngày gửi</label>
+                        <input  type="date" class="form-control" th:field="*{startDay}"/>
+                        <span th:errors="*{startDay}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>ngày đáo hạn</label>
+                        <input  type="date" class="form-control" th:field="*{endDay}"/>
+                        <span th:errors="*{endDay}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>kì hạn</label>
+                        <input  type="text" class="form-control" th:field="*{tenor}"/>
+                        <span th:errors="*{tenor}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>số tiền gửi</label>
+                        <input  type="text" class="form-control" th:field="*{deposits}"/>
+                        <span th:errors="*{deposits}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>tên khách hàng</label>
+                       <select th:field ="*{customer}">
+                           <option th:each="i : ${customerList}" th:value="${i.id}" th:text="${i.name}">
+                           </option>
+                       </select >
+                    </div>
+
+                    <div class="modal-footer">
+                        <a th:href="@{/user}" class="btn btn-dark">Huỷ</a>
+                        <input type="submit" class="btn btn-info" value="lưu">
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="/layout :: footer"></footer>
+</body>
+<th:block th:replace="/layout::script"/>
+</html>

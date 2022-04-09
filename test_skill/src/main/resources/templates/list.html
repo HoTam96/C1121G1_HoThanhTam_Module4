@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout1 :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>danh sách khách hàng đã làm sổ tiết kiệm</h3>
+<p>
+    <a th:href="@{/bank/}">
+        ADD NEW CUSTOMER>
+    </a>
+</p>
+<div>
+    <form method="post" action="/bank/search">
+        <input  type="text"  name="namB" placeholder="search by name">
+        <input type="submit" value="search">
+    </form>
+</div>
+<table id="customers">
+    <thead>
+    <tr>
+        <th>mã sổ tiết kiệm</th>
+        <th>ngày gửi</th>
+        <th>ngày đáo hạn</th>
+        <th>số tiền gửi</th>
+        <th>kì hạn</th>
+        <th>khách hàng gửi</th>
+        <th>Edit</th>
+        <th>delete</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="itemp : ${bankList}">
+        <td th:text="${itemp.codeBank}">
+        <td th:text="${itemp.startDay}">
+        <td th:text="${itemp.endDay}">
+        <td th:text="${itemp.deposits}">
+        <td th:text="${itemp.tenor}">
+        <td th:text="${itemp.customer.name}">
+        <td><a th:href="@{/bank/showEdit/{id}(id=${itemp.id})}">edit</a></td>
+        <td><a th:href="@{/bank/delete/{id}(id=${itemp.id})}">delete</a></td>
+    </tr>
+    </tbody>
+</table>
+<!--<div class="notify">-->
+<!--    <div>-->
+
+<!--    </div>-->
+<!--</div>-->
+<footer th:replace="/layout1 :: footer">
+
+</footer>
+
+</body>
+</html>

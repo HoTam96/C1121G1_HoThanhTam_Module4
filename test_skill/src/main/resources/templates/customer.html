@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tạo mới khách hàng</title>
+    <style th:replace="/layout :: css_style"></style>
+    <th:block th:replace="/layout :: linkHead"/>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <button><a th:href="@{/bank/home}">về trang chủ</a></button>
+        <div class="col-6 mx-auto">
+            <h2 id="ed" style="color: deepskyblue ; text-align: center" th:text="${mesage}"></h2>
+            <form method="post" th:action="@{/bank/createCustomer}" th:object="${customerDto}">
+                <div class="modal-header">
+                    <h4 class="modal-title text-primary">Thêm mới Khách hàng</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Tên khách hàng</label>
+                        <input  type="text" class="form-control" th:field="*{name}"/>
+                        <span th:errors="*{name}"></span>
+                    </div>
+
+                    <div class="modal-footer">
+                        <a th:href="@{/user}" class="btn btn-dark">Huỷ</a>
+                        <input type="submit" class="btn btn-info" value="Thêm mới">
+                    </div>
+                </div>
+            </form>
+           <button><a th:href="@{/bank/createBank}">thêm mới sổ tiết kiệm</a></button>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="/layout :: footer"></footer>
+</body>
+<script>
+    function hau(){
+        document.getElementById("ed").innerText="";
+    }
+    setTimeout(hau,5000);
+</script>
+<th:block th:replace="/layout::script"/>
+</html>
