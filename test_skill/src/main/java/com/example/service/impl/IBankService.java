@@ -13,4 +13,5 @@ public interface IBankService {
     void update(Bank bank);
     void delete(Integer id);
     List<Bank>search(String name);
+    List<Bank>findByNameCustomer(String name);
 }

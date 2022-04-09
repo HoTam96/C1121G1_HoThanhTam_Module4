@@ -112,7 +112,7 @@ public class BankDto implements Validator {
             LocalDate now = LocalDate.now();
             LocalDate date = LocalDate.parse(bankDto.getStartDay(), formatter);
             if (date.isBefore(now)) {
-                errors.rejectValue("startDay", "time.before", "ngày quá khứ");
+                errors.rejectValue("startDay", "time.before", "ngày đăng kí không được nhỏ hơn ngày hiện tại");
 
             }
 

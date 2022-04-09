@@ -42,4 +42,9 @@ public class BankService implements IBankService {
     public List<Bank> search(String name) {
         return iBankRepository.findAllByCustomer_NameContaining(name);
     }
+
+    @Override
+    public List<Bank> findByNameCustomer(String name) {
+        return iBankRepository.findAllByCustomer_NameContaining(name);
+    }
 }

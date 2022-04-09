@@ -25,13 +25,6 @@ public class CustomerController {
     private ICustomerService iCustomerService;
     @Autowired
     IBankService iBankService;
-
-//    @GetMapping("")
-//    public ModelAndView getInforCustomer() {
-//        CustomerDto customerDto = new CustomerDto();
-//        ModelAndView modelAndView = new ModelAndView("customer", "customerDto", customerDto);
-//        return modelAndView;
-//    }
     @GetMapping("")
     public ModelAndView getHome(){
         List<Bank> bankList = iBankService.findAll();
@@ -64,6 +57,11 @@ public class CustomerController {
         Customer customer = new Customer();
         customer.setName(bankDto.getCustomer().getName());
         bank.setCustomer(customer);
+
+
+
+
+        
         iBankService.save(bank);
         modelAndView.setViewName("redirect:/bank");
         return modelAndView;
@@ -106,13 +104,13 @@ public class CustomerController {
     @GetMapping("/delete/{id}")
     public  String delete(@PathVariable("id") Integer id){
         iBankService.delete(id);
-        return "redirect:/bank/home";
+        return "redirect:/bank";
 
     }
 
     @PostMapping("/search")
     public ModelAndView search(@RequestParam("namB") String name){
-        List<Bank> bankList = iBankService.search(name);
+        List<Bank> bankList = iBankService.findByNameCustomer(name);
         ModelAndView modelAndView = new ModelAndView("list","bankList",bankList);
         modelAndView.addObject("bankList",bankList);
         modelAndView.addObject("name",name);
