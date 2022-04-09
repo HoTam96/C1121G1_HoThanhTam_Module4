@@ -26,32 +26,17 @@ public class CustomerController {
     @Autowired
     IBankService iBankService;
 
+//    @GetMapping("")
+//    public ModelAndView getInforCustomer() {
+//        CustomerDto customerDto = new CustomerDto();
+//        ModelAndView modelAndView = new ModelAndView("customer", "customerDto", customerDto);
+//        return modelAndView;
+//    }
     @GetMapping("")
-    public ModelAndView getInforCustomer() {
-        CustomerDto customerDto = new CustomerDto();
-        ModelAndView modelAndView = new ModelAndView("customer", "customerDto", customerDto);
-        return modelAndView;
-    }
-    @GetMapping("/home")
     public ModelAndView getHome(){
         List<Bank> bankList = iBankService.findAll();
         ModelAndView modelAndView = new ModelAndView("list","bankList",bankList);
         modelAndView.addObject("bankList",bankList);
-        return modelAndView;
-    }
-
-    @PostMapping("/createCustomer")
-    public ModelAndView CreateCustomer(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        if (bindingResult.hasFieldErrors()) {
-            modelAndView.setViewName("customer");
-            return modelAndView;
-        }
-        Customer customer = new Customer();
-        BeanUtils.copyProperties(customerDto, customer);
-        iCustomerService.save(customer);
-        modelAndView.setViewName("customer");
-        modelAndView.addObject("mesage", "đăng kí thành công");
         return modelAndView;
     }
 
@@ -77,14 +62,10 @@ public class CustomerController {
         Bank bank = new Bank();
         BeanUtils.copyProperties(bankDto, bank);
         Customer customer = new Customer();
-        customer.setId(bankDto.getCustomer().getId());
+        customer.setName(bankDto.getCustomer().getName());
         bank.setCustomer(customer);
         iBankService.save(bank);
-//        List<Customer> customerList = iCustomerService.findAll();
-//        List<Bank> bankList = iBankService.findAll();
-//        modelAndView.addObject("bankList", bankList);
-//        modelAndView.setViewName("list");
-        modelAndView.setViewName("redirect:/bank/home");
+        modelAndView.setViewName("redirect:/bank");
         return modelAndView;
     }
 
@@ -113,7 +94,7 @@ public class CustomerController {
         Bank bank = new Bank();
         BeanUtils.copyProperties(bankDto, bank);
         Customer customer = new Customer();
-        customer.setId(bankDto.getCustomer().getId());
+        customer.setName(bankDto.getCustomer().getName());
         bank.setCustomer(customer);
         iBankService.update(bank);
         List<Bank> bankList = iBankService.findAll();
@@ -134,6 +115,7 @@ public class CustomerController {
         List<Bank> bankList = iBankService.search(name);
         ModelAndView modelAndView = new ModelAndView("list","bankList",bankList);
         modelAndView.addObject("bankList",bankList);
+        modelAndView.addObject("name",name);
         return modelAndView;
     }
 

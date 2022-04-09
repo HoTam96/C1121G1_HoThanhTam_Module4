@@ -5,6 +5,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -12,8 +13,8 @@ import java.util.Set;
 public class CustomerDto implements Validator {
 
     private Integer id;
-    @NotBlank
-    @Pattern(regexp = "[A-Za-z ]+",message = "nhập sai định dạng")
+    @NotEmpty
+    @Pattern(regexp = "(^$|[\\p{Lu}\\p{Ll}\\s]+)",message = "nhập sai định dạng")
     private String name;
     private Set<Bank> bankSet;
     public CustomerDto() {
@@ -47,7 +48,6 @@ public class CustomerDto implements Validator {
     public boolean supports(Class<?> clazz) {
         return false;
     }
-
     @Override
     public void validate(Object target, Errors errors) {
 

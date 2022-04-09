@@ -13,10 +13,9 @@ public class Bank {
     private Integer id;
     private String codeBank;
     private String startDay;
-    private String endDay;
     private String tenor;
     private Double deposits;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id",referencedColumnName = "id")
     private Customer customer;
 
@@ -39,6 +38,7 @@ public class Bank {
         this.codeBank = codeBank;
     }
 
+
     public String getStartDay() {
         return startDay;
     }
@@ -47,13 +47,6 @@ public class Bank {
         this.startDay = startDay;
     }
 
-    public String getEndDay() {
-        return endDay;
-    }
-
-    public void setEndDay(String endDay) {
-        this.endDay = endDay;
-    }
 
     public String getTenor() {
         return tenor;
@@ -78,4 +71,6 @@ public class Bank {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+
 }

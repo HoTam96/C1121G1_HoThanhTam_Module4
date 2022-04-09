@@ -9,38 +9,45 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import javax.persistence.Column;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class BankDto implements Validator {
+    public static final String DATE_YYYY_MM_DD = "^\\d{4}[\\-\\/\\s]?((((0[13578])|(1[02]))[\\-\\/\\s]?(([0-2][0-9])|(3[01])))|(((0[469])|(11))[\\-\\/\\s]?(([0-2][0-9])|(30)))|(02[\\-\\/\\s]?[0-2][0-9]))$";
     @Autowired
-    private IBankRepository iBankRepository ;
+    private IBankRepository iBankRepository;
 
     private Integer id;
     @Pattern(regexp = "(MB-)[0-9]{4}", message = "định dang : MB-xxxx")
-
     @Column(unique = true)
-
     private String codeBank;
     @NotBlank
     private String startDay;
-    @NotBlank
-    private String endDay;
     @Size(min = 1, max = 4)
     @Pattern(regexp = "[0-9]+", message = "nhập sai định dạng")
     private String tenor;
 
     @NotNull
-    @Range(min = 100000, max = 30000000, message = "tối thiểu là 100000 VND , tối đa 30000000")
+    @Range(min = 1, max = 30000000, message = "tối thiểu là 100000 VND , tối đa 30000000")
     private Double deposits;
-
-    private Customer customer;
+   @Valid
+    private CustomerDto customer;
 
     public BankDto() {
+    }
+
+    public IBankRepository getiBankRepository() {
+        return iBankRepository;
+    }
+
+    public void setiBankRepository(IBankRepository iBankRepository) {
+        this.iBankRepository = iBankRepository;
     }
 
     public Integer getId() {
@@ -67,13 +74,6 @@ public class BankDto implements Validator {
         this.startDay = startDay;
     }
 
-    public String getEndDay() {
-        return endDay;
-    }
-
-    public void setEndDay(String endDay) {
-        this.endDay = endDay;
-    }
 
     public String getTenor() {
         return tenor;
@@ -91,11 +91,11 @@ public class BankDto implements Validator {
         this.deposits = deposits;
     }
 
-    public Customer getCustomer() {
+    public CustomerDto getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(CustomerDto customer) {
         this.customer = customer;
     }
 
@@ -107,10 +107,15 @@ public class BankDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         BankDto bankDto = (BankDto) target;
-        String year = bankDto.startDay;
-        LocalDate yea1 = LocalDate.now();
-        String year2 = yea1.toString();
+        if (bankDto.getStartDay().matches(DATE_YYYY_MM_DD)) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate now = LocalDate.now();
+            LocalDate date = LocalDate.parse(bankDto.getStartDay(), formatter);
+            if (date.isBefore(now)) {
+                errors.rejectValue("startDay", "time.before", "ngày quá khứ");
 
+            }
 
+        }
     }
 }
