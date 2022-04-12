@@ -66,6 +66,13 @@ public class BookController {
         modelAndView.setViewName("redirect:/book");
         return modelAndView;
     }
+    @ExceptionHandler(Exception.class)
+    public String goErrow(){
+
+        return "error";
+    }
+
+
 
 
 }
