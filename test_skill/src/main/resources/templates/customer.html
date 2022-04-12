@@ -12,6 +12,7 @@
         <button><a th:href="@{/bank/home}">về trang chủ</a></button>
         <div class="col-6 mx-auto">
             <h2 id="ed" style="color: deepskyblue ; text-align: center" th:text="${mesage}"></h2>
+
             <form method="post" th:action="@{/bank/createCustomer}" th:object="${customerDto}">
                 <div class="modal-header">
                     <h4 class="modal-title text-primary">Thêm mới Khách hàng</h4>

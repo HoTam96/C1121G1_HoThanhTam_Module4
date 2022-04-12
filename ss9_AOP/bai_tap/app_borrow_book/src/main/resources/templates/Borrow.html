@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>App mượn sách </h2>
+<p>
+   <button class=" btn btn-success"> <a th:href="@{/book}">
+        Back to list blog
+    </a></button>
+</p>
+<div id="form">
+    <form th:action="@{/book/save}" th:object="${borrowBook}" method="post">
+        <label>mã mượn sách: </label>
+        <input readonly type="text"  th:field="*{code}">
+        <label>tên sách: </label>
+        <input readonly type="text" th:value="${books.nameBook}">
+
+        <label>tác giả </label>
+        <input readonly type="text" th:value="${books.author}" >
+
+        <label>ngày mươn: </label>
+        <input type="date" th:field="*{startDay}">
+
+        <label>ngày trả</label>
+        <input type="date" th:field="*{endDay}">
+        <input  type="hidden"  th:field="*{book}">
+        <input type="submit" value="save">
+    </form>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

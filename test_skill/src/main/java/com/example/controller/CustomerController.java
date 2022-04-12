@@ -59,9 +59,6 @@ public class CustomerController {
         bank.setCustomer(customer);
 
 
-
-
-        
         iBankService.save(bank);
         modelAndView.setViewName("redirect:/bank");
         return modelAndView;
@@ -88,6 +85,7 @@ public class CustomerController {
             List<Customer> customerList = iCustomerService.findAll();
             modelAndView.addObject("customerList", customerList);
             return modelAndView;
+
         }
         Bank bank = new Bank();
         BeanUtils.copyProperties(bankDto, bank);
@@ -115,6 +113,11 @@ public class CustomerController {
         modelAndView.addObject("bankList",bankList);
         modelAndView.addObject("name",name);
         return modelAndView;
+    }
+
+    @GetMapping("/index")
+    public String index(){
+        return "index";
     }
 
 
