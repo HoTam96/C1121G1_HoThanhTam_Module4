@@ -61,12 +61,6 @@ public class Cart {
 
         }
         return payment;
-//        float payment = 0;
-//        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-//            payment += entry.getKey().getPrice() * (float) entry.getValue();
-//        }
-//        return payment;
-
 
     }
 
