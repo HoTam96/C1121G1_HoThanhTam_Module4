@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/smartphones")
-public class SmartphoneController   {
+public class SmartphoneController {
     @Autowired
     private IphoneService iphoneService;
 
@@ -21,6 +21,7 @@ public class SmartphoneController   {
     public ResponseEntity<Smartphone> createSmartphone(@RequestBody Smartphone smartphone) {
         return new ResponseEntity<>(iphoneService.save(smartphone), HttpStatus.CREATED);
     }
+
     @GetMapping("/list")
     public ModelAndView getAllSmartphonePage() {
         ModelAndView modelAndView = new ModelAndView("list");
@@ -32,6 +33,7 @@ public class SmartphoneController   {
     public ResponseEntity<Iterable<Smartphone>> allPhones() {
         return new ResponseEntity<>(iphoneService.findAll(), HttpStatus.OK);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Smartphone> deleteSmartphone(@PathVariable Long id) {
         Optional<Smartphone> smartphoneOptional = iphoneService.findById(id);
@@ -40,6 +42,30 @@ public class SmartphoneController   {
         }
         iphoneService.remove(id);
         return new ResponseEntity<>(smartphoneOptional.get(), HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping("/update")
+    ResponseEntity<Void> updatePath(@RequestBody Smartphone smartphone) {
+        iphoneService.save(smartphone);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+//    @GetMapping("/{id}")
+//    public ModelAndView show(@PathVariable("id")Long id){
+//        Optional<Smartphone> smartphoneOptional = iphoneService.findById(id);
+//        ModelAndView modelAndView = new ModelAndView("edit","phone",smartphoneOptional.get());
+//        return modelAndView;
+//    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<Smartphone>phoneById(@PathVariable("id")Long id){
+        Optional<Smartphone> smartphoneOptional = iphoneService.findById(id);
+        if (!smartphoneOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(smartphoneOptional.get(),HttpStatus.OK);
+
     }
 
 }
