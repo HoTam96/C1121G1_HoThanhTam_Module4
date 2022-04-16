@@ -1,0 +1,351 @@
+<!DOCTYPE>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title> Blog Hồ Thah Tâm</title>
+    <meta name="keywords" content="clean blog template, html css layout"/>
+    <meta name="description" content="Clean Blog Template is provided by templatemo.com"/>
+    <link href="../templatemo_style.css" rel="stylesheet" type="text/css"/>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
+
+    <link href="../s3slider.css" rel="stylesheet" type="text/css"/>
+    <!-- JavaScripts-->
+    <!--    <script type="text/javascript" src="/js/jquery.js"></script>-->
+
+
+    <style>
+        .img-content {
+            width: 450px;
+            height: 500px;
+
+        }
+
+        .search-ds {
+
+            margin-left: 100px;
+        }
+    </style>
+
+
+</head>
+<body>
+
+
+<div id="templatemo_wrapper">
+
+    <div id="templatemo_menu">
+
+        <ul>
+            <li><a href="/blog/home" class="current">Blog</a></li>
+            <li><a href="#">Create Blog</a></li>
+        </ul>
+
+    </div> <!-- end of templatemo_menu -->
+    <div class="search-ds">
+        <form action="/blog/home">
+            <input type="text" name="keyWord">
+            <button>Search</button>
+        </form>
+    </div>
+
+    <div id="templatemo_left_column">
+
+        <div id="templatemo_header">
+
+            <div id="site_title">
+                <h1><a href="#" target="_parent">Tâm
+                    <strong>Blog</strong><span>hãy kết nối</span></a>
+                </h1>
+            </div><!-- end of site_title -->
+
+        </div> <!-- end of header -->
+
+        <div id="templatemo_sidebar">
+
+            <div id="templatemo_rss">
+
+                <a href="#">Liên hệ với anh Tâm <br/><span>to our rss feed</span></a>
+
+            </div>
+
+
+            <h4>Categories</h4>
+            <ul id="category_name" class="templatemo_list">
+
+            </ul>
+
+
+            <div class="cleaner_h40"></div>
+
+
+        </div> <!-- end of templatemo_sidebar -->
+
+    </div> <!-- end of templatemo_left_column -->
+
+    <div id="templatemo_right_column">
+
+        <div id="featured_project">
+            <div id="slider">
+                <ul id="sliderContent">
+                    <li class="sliderImage">
+                        <a href=""><img src="../images/slider/1.jpg" alt="1"/></a>
+                        <span class="top"><strong>Project 1</strong><br/>Suspendisse turpis arcu, dignissim ac laoreet a, condimentum in massa.</span>
+                    </li>
+                    <li class="sliderImage">
+                        <a href=""><img src="../images/slider/1.jpg" alt="2"/></a>
+                        <span class="bottom"><strong>Project 2</strong><br/>uisque eget elit quis augue pharetra feugiat.</span>
+                    </li>
+                    <li class="sliderImage">
+                        <img src="../images/slider/1.jpg" alt="3"/>
+                        <span class="left"><strong>Project 3</strong><br/>Sed et quam vitae ipsum vulputate varius vitae semper nunc.</span>
+                    </li>
+                    <li class="sliderImage">
+                        <img src="../images/slider/1.jpg" alt="4"/>
+                        <span class="right"><strong>Project 4</strong><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                    </li>
+                    <li class="clear sliderImage"></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="templatemo_main">
+
+            <!--            liss blog-->
+            <div id="blog_data" class="post_section tam">
+
+            </div>
+
+            <button id="loadMore-btn" class="btn btn-success"><a onclick="loadMoer()">load more</a></button>
+            <!---->
+
+            <!---->
+
+        </div>
+        <!--        <div>-->
+        <!--            <a th:if="${pictureList.hasPrevious()}"-->
+        <!--               th:href="@{/blog/home(page=${pictureList.number -1},keyWord=${keyWord})}">Previous</a>-->
+        <!--            <span th:text="${pictureList.number+1}"></span>/-->
+        <!--            <span th:text="${pictureList.totalPages}"></span>-->
+        <!--            <a th:if="${pictureList.hasNext()}"-->
+        <!--               th:href="@{/blog/home(page=${pictureList.number + 1},keyWord=${keyWord})}">next</a>-->
+        <!--        </div>-->
+
+
+        <!-- end of templatemo_main -->
+
+    </div>
+</div>
+
+<!--&lt;!&ndash; commnet&ndash;&gt; start-->
+
+<!--<div class="container mt-5">-->
+<!--   -->
+<!--</div>-->
+<div id="templatemo_footer">
+    Copyright © 1996 <a href="#">luôn luôn lắng nghe</a> |
+    <a href="http://www.iwebsitetemplate.com" target="_parent">lâu lâu mới hiểu</a> <a
+        href="http://www.templatemo.com" target="_parent">by codegym C1121G1</a>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../js/s3Slider.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#slider').s3Slider({
+            timeOut: 1600
+        });
+    });
+
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        type: 'GET',
+        url: 'http://localhost:8080/blog/home',
+        success: function (resultBlog) {
+            let blogs = resultBlog.content;
+            let outHtml = "";
+            for (let i = 0; i < blogs.length; i++) {
+                outHtml += `
+                  <h2><a class="view-blog" onclick="viewBlog(${blogs[i].id})">${blogs[i].title}</a> </h2>
+                  <span>${blogs[i].datePhoto}</span>| <strong>Author:</strong> <span>${blogs[i].author}</span>
+                   | <strong>Category:</strong> <a href="#">${blogs[i].category.categoryName}</a>
+                    <img class="img-content" src="https://avi.edu.vn/wp-content/uploads/2019/11/london-2393098.jpg">
+                    <p>${blogs[i].description}</p>
+                         <button><a href="#">delete blog</a></button>
+         <button><a href="#">edit Blog</a></button>
+
+                  `
+            }
+
+            $(".tam").html(outHtml);
+
+
+        },
+        error: function (resultError) {
+            alert("đã lỗi")
+        }
+
+
+    });
+    $.ajax({
+
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        type: 'GET',
+        url: 'http://localhost:8080/blog/category',
+        success: function (resultCategory) {
+            let outHtml = "";
+            for (let i = 0; i < resultCategory.length; i++) {
+                outHtml += `
+                  <li>
+                  <a class="categoryBlog" onclick="category(${resultCategory[i].id})" href="${resultCategory[i].id}" >${resultCategory[i].categoryName}</a>
+                  </li>
+                    `
+            }
+
+            $("#category_name").html(outHtml);
+        }
+
+
+    });
+
+
+    // $('body').on('click', '.categoryBlog', function (event) {
+    //     alert($(this).attr('href'))
+    //
+    //     event.preventDefault();
+    // });
+
+    // $("#categoryBlog").click(function (event) {
+    function category(id) {
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: 'GET',
+            url: 'http://localhost:8080/blog/load/' + id,
+            success: function (resultBlog) {
+                let blogger = resultBlog.content;
+                let outHtml = "";
+                for (let i = 0; i < blogger.length; i++) {
+                    outHtml += `
+              <h2><a href="#"></a>${blogger[i].title} </h2>
+              <span>${blogger[i].datePhoto}</span>| <strong>Author:</strong> <span>${blogger[i].author}</span>
+               | <strong>Category:</strong> <a href="#">${blogger[i].category.categoryName}</a>
+                <img class="img-content" src="https://avi.edu.vn/wp-content/uploads/2019/11/london-2393098.jpg">
+                <p>${blogger[i].description}</p>
+                     <button><a href="#">delete blog</a></button>
+     <button><a href="#">edit Blog</a></button>`
+
+                }
+                $(".tam").html(outHtml);
+            }
+        });
+    };
+
+    //load cate theo id
+
+
+    // }
+
+
+    //    sự kiên load bài
+
+    var page = 0;
+
+    function loadMoer() {
+        if (!page) {
+            page = 0;
+        }
+        page++;
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: 'GET',
+            url: 'http://localhost:8080/blog/home?page=' + page,
+            success: function (resultBlog) {
+                let blogs = resultBlog.content;
+                if (blogs.length === 0) {
+                    $("#loadMore-btn").fadeOut();
+                }
+                setTimeout(function () {
+                    getloadBlog(blogs);
+                }, 1000);
+
+
+            },
+            error: function (resultError) {
+                alert("đã lỗi")
+            }
+        });
+
+    }
+
+
+    function getloadBlog(blogs) {
+
+        let outHtml = "";
+        for (let i = 0; i < blogs.length; i++) {
+            outHtml += `
+                  <h2><a href="#"></a>${blogs[i].title} </h2>
+                  <span>${blogs[i].datePhoto}</span>| <strong>Author:</strong> <span>${blogs[i].author}</span>
+                   | <strong>Category:</strong> <a href="#">${blogs[i].category.categoryName}</a>
+                    <img class="img-content" src="https://avi.edu.vn/wp-content/uploads/2019/11/london-2393098.jpg">
+                    <p>${blogs[i].description}</p>
+                         <button><a href="#">delete blog</a></button>
+         <button><a href="#">edit Blog</a></button>
+
+                  `
+        }
+
+        $(".tam").append(outHtml);
+
+    }
+
+
+    //    get load view
+    // function viewBlog(id) {
+    //
+    //     $.ajax({
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json'
+    //         },
+    //         type: 'GET',
+    //         url : 'http://localhost:8080/blog/view/' + id,
+    //         success : function (resultView) {
+    //             let outHtml  = "";
+    //
+    //
+    //
+    //         }
+    //
+    //
+    //
+    //     });
+    //
+    //
+    // }
+
+
+</script>
+
+
+</body>
+
+
+</html>
