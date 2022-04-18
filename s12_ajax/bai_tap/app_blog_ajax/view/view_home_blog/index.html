@@ -227,14 +227,14 @@
 
     // $("#categoryBlog").click(function (event) {
     function category(id) {
-
+        let a = id;
         $.ajax({
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            type: 'GET',
-            url: 'http://localhost:8080/blog/load/' + id,
+            type: "GET",
+            url: 'http://localhost:8080/blog/load/' + a,
             success: function (resultBlog) {
                 let blogger = resultBlog.content;
                 let outHtml = "";
@@ -247,11 +247,14 @@
                 <p>${blogger[i].description}</p>
                      <button><a href="#">delete blog</a></button>
      <button><a href="#">edit Blog</a></button>`
-
                 }
+
                 $(".tam").html(outHtml);
+                location.reload();
+
             }
         });
+        id.preventDefault();
     };
 
     //load cate theo id

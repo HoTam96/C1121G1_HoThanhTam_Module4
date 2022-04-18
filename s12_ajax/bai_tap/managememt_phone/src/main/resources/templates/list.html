@@ -23,8 +23,8 @@
         <tr>
             <td></td>
             <td>
-            <input type="submit" id="submit_btn" value="Add" onclick="addNewSmartPhone()">
-            <input type="submit" id="update_btn" value="Update">
+                <input type="submit" id="submit_btn" value="Add" onclick="addNewSmartPhone()">
+                <input type="submit" id="update_btn" value="Update">
             </td>
         </tr>
     </table>
@@ -105,8 +105,13 @@
     }
 
     function getSmartphone(smartphone) {
-        return `<tr><td >${smartphone.producer}</td><td >${smartphone.model}</td><td >${smartphone.price}</td>` +
-            `<td><a class="deleteSmartphone" href="${smartphone.id}">Delete</a></td></tr>`;
+        return `<tr>
+                 <td >${smartphone.producer}</td>
+                  <td >${smartphone.model}</td>
+                <td >${smartphone.price}</td>` +
+            `<td><a class="deleteSmartphone" href="${smartphone.id}">Delete</a></td>
+                 <td><a class="editSmartphone" th:href="${smartphone.getId()}">edit</a></td>
+                </tr>`;
     }
 
     $(document).ready(function () {
@@ -131,7 +136,7 @@
         });
     })
 
-    $('.editSmartphone').click(function () {
+    $('.editSmartphone').click(function (event) {
         let a = $(this);
         let id = a.attr("href");
 
@@ -141,8 +146,8 @@
                 'Content-Type': 'application/json'
             },
             type: "GET",
-            url: `/smartphones/${id}` ,
-            success : function (result){
+            url: `/smartphones/${id}`,
+            success: function (result) {
                 editId = result.id
                 $('#producer').val(result.producer);
                 $('#model').val(result.model);
@@ -151,29 +156,29 @@
                 $("#submit_btn").hide();
             }
         });
-
+        event.preventDefault();
     });
 
-    $('#update_btn').click(function (){
+    $('#update_btn').click(function () {
         let producer = $('#producer').val();
         let price = $('#price').val();
         let model = $('#price').val();
 
-        let smartPhone =  {
-            id : editId ,
-            producer : producer,
-            model : model ,
-            price : price
+        let smartPhone = {
+            id: editId,
+            producer: producer,
+            model: model,
+            price: price
         }
         $.ajax({
-            headers :{
+            headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             type: "PATCH",
             data: JSON.stringify(smartPhone),
-            url : "/smartphones/update",
-            success : function (){
+            url: "/smartphones/update",
+            success: function () {
                 $("#update_btn").hide();
                 $("#submit_btn").show();
                 location.reload();
@@ -181,9 +186,6 @@
             }
 
         });
-
-
-
 
 
     });

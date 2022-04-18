@@ -3,6 +3,7 @@ package com.example.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity(name = "blog")
@@ -13,6 +14,7 @@ public class BlogPicture {
     private String title;
     @Column(columnDefinition = "date")
     private String datePhoto;
+    @NotNull
     private String image;
     private String author;
     private String description;
