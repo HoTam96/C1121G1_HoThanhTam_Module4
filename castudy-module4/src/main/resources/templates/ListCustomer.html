@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.css"
+            rel="stylesheet"
+    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+
+</head>
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>mã khách hàng</th>
+        <th>tên</th>
+        <th>Ngày sinh</th>
+        <th>giới tính</th>
+        <th>CMNN</th>
+        <th>Số điện thoại</th>
+        <th>Email</th>
+        <th>địa chỉ</th>
+        <th>Loại khách hàng</th>
+        <th>chỉnh sửa</th>
+        <th>xóa</th>
+    </tr>
+    </thead>
+    <tbody id="body_list">
+
+
+    </tbody>
+</table>
+
+
+
+<!--bắt  đầu modal-->
+
+
+
+
+
+
+
+
+
+
+
+<!--script-->
+
+
+<!-- MDB -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+<script>
+   $.ajax({
+        headers: {
+            'Accept ': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        type: 'GET',
+        url: 'http://localhost:8080/furama',
+        success: function (result) {
+            console.log("hiih")
+            let resultValue = result.content;
+            let outHtml = "";
+            for (let i = 0; i < resultValue.length; i++) {
+                outHtml += `<tr>
+<td>${i+1}</td>
+<td>${resultValue[i].customerCode}</td>
+<td>${resultValue[i].name}</td>
+<td>${resultValue[i].dateOfBirth}</td>
+<td>${resultValue[i].gender}</td>
+<td>${resultValue[i].idCard}</td>
+<td>${resultValue[i].phone}</td>
+<td>${resultValue[i].email}</td>
+<td>${resultValue[i].address}</td>
+ <td>${resultValue[i].customerType.customerTypeName}</td>
+<td><a>sủa</a></td>
+<td><a>xóa</a></td>
+</tr>
+        `
+            }
+            $('#body_list').html(outHtml);
+
+        },
+        error: function () {
+alert("ngụ")
+        }
+
+    });
+//kết thúc tạo list
+
+
+
+
+
+</script>
+
+
+</body>
+</html>

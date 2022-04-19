@@ -3,6 +3,7 @@ package com.codegym.model.customer;
 
 import com.codegym.model.Person;
 import com.codegym.model.contract.Contract;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,7 +19,7 @@ public class Customer extends Person {
     @NotNull
     private String gender;
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JoinColumn(name = "customer_type_id", referencedColumnName = "id")
     private CustomerType customerType;
 
     @OneToMany (mappedBy = "customer")
