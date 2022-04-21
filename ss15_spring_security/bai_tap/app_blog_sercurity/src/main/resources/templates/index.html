@@ -1,0 +1,239 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title> Blog Hồ Thah Tâm</title>
+    <meta name="keywords" content="clean blog template, html css layout"/>
+    <meta name="description" content="Clean Blog Template is provided by templatemo.com"/>
+    <link href="/templatemo_style.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <link href="/s3slider.css" rel="stylesheet" type="text/css"/>
+    <!-- JavaScripts-->
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/s3Slider.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#slider').s3Slider({
+                timeOut: 1600
+            });
+        });
+    </script>
+    <style>
+        .img-content {
+            width: 450px;
+            height: 500px;
+
+        }
+
+        .search-ds {
+
+            margin-left: 100px;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<div id="templatemo_wrapper">
+
+    <div id="templatemo_menu">
+
+        <ul>
+            <li><a href="/blog/home" class="current">Blog</a></li>
+            <li><a th:href="@{/blog/create}">Create Blog</a></li>
+            <li><a th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Logout</a></li>
+            <li><a th:if="${#request.userPrincipal == null}" th:href="@{/login}">Login</a></li>
+
+        </ul>
+
+    </div> <!-- end of templatemo_menu -->
+    <div class="search-ds">
+        <form action="/blog/home">
+            <input type="text" name="keyWord">
+            <button>Search</button>
+        </form>
+    </div>
+
+    <div id="templatemo_left_column">
+
+        <div id="templatemo_header">
+
+            <div id="site_title">
+                <h1><a href="#" target="_parent">Tâm
+                    <strong>Blog</strong><span>hãy kết nối</span></a>
+                </h1>
+            </div><!-- end of site_title -->
+
+        </div> <!-- end of header -->
+
+        <div id="templatemo_sidebar">
+
+            <div id="templatemo_rss">
+
+                <a href="#">Liên hệ với anh Tâm <br/><span>to our rss feed</span></a>
+
+            </div>
+
+
+            <h4>Categories</h4>
+            <ul th:each="listC : ${categoryList}" class="templatemo_list">
+                <li><a th:text="${listC.categoryName}" th:href="@{/blog/load/{id}(id=${listC.id})}"></a></li>
+            </ul>
+
+
+            <div class="cleaner_h40"></div>
+
+            <!--            <h4>Friends</h4>-->
+            <!--            <ul class="templatemo_list">-->
+            <!--                <li><a href="http://www.templatemo.com" target="_parent">Free CSS Templates</a></li>-->
+            <!--                <li><a href="http://www.flashmo.com" target="_parent">Flash Templates</a></li>-->
+            <!--                <li><a href="http://www.flashmo.com/store" target="_parent">Premium Themes</a></li>-->
+            <!--                <li><a href="http://www.webdesignmo.com/blog" target="_parent">Web Design Blog</a></li>-->
+            <!--                <li><a href="http://www.koflash.com" target="_parent">Flash Web Gallery</a></li>-->
+            <!--                <li><a href="#">Curabitur sed lacinia</a></li>-->
+            <!--                <li><a href="#">Vestibulum laoreet tincidunt</a></li>-->
+            <!--                <li><a href="#">Nullam nec mi enim</a></li>-->
+            <!--                <li><a href="#">Aliquam quam nulla</a></li>-->
+            <!--                <li><a href="#">Curabitur non felis massa</a></li>-->
+            <!--            </ul>-->
+
+        </div> <!-- end of templatemo_sidebar -->
+
+    </div> <!-- end of templatemo_left_column -->
+
+    <div id="templatemo_right_column">
+
+        <div id="featured_project">
+            <div id="slider">
+                <ul id="sliderContent">
+                    <li class="sliderImage">
+                        <a href=""><img src="/images/slider/1.jpg" alt="1"/></a>
+                        <span class="top"><strong>Project 1</strong><br/>Suspendisse turpis arcu, dignissim ac laoreet a, condimentum in massa.</span>
+                    </li>
+                    <li class="sliderImage">
+                        <a href=""><img src="/images/slider/2.jpg" alt="2"/></a>
+                        <span class="bottom"><strong>Project 2</strong><br/>uisque eget elit quis augue pharetra feugiat.</span>
+                    </li>
+                    <li class="sliderImage">
+                        <img src="/images/slider/3.jpg" alt="3"/>
+                        <span class="left"><strong>Project 3</strong><br/>Sed et quam vitae ipsum vulputate varius vitae semper nunc.</span>
+                    </li>
+                    <li class="sliderImage">
+                        <img src="/images/slider/4.jpg" alt="4"/>
+                        <span class="right"><strong>Project 4</strong><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                    </li>
+                    <li class="clear sliderImage"></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="templatemo_main">
+
+            <div th:each="list:${pictureList}" class="post_section">
+
+                <h2><a href="#" th:text="${list.title}"></a></h2>
+
+
+                <span th:text="${list.datePhoto}"></span>| <strong>Author:</strong> <span
+                    th:text="${list.author}"></span> | <strong>Category:</strong> <a href="#"
+                                                                                     th:text="${list.category.categoryName}"></a>
+
+                <img class="img-content" th:src="${list.image}">
+
+                <p th:text="${list.description}"></p>
+
+                <button><a th:href="@{/blog/delete/{id}(id=${list.id})}">delete blog</a></button>
+                <button><a th:href="@{/blog/showEdit/{id}(id=${list.id})}">edit Blog</a></button>
+
+                <div id="tam">
+                    <div class="d-flex row">
+                        <div class="col-md-8">
+                            <div class="d-flex flex-column comment-section">
+                                <div class="bg-white p-2">
+                                    <div class="d-flex flex-row user-info"><img class="rounded-circle"
+                                                                                src="https://i.imgur.com/RpzrMR2.jpg"
+                                                                                width="40">
+                                        <div class="d-flex flex-column justify-content-start ml-2"><span
+                                                class="d-block font-weight-bold name"></span><span
+                                                class="date text-black-50">Shared publicly - Jan 2020</span></div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                            consequat.</p>
+                                    </div>
+                                </div>
+                                <div class="bg-white">
+                                    <div class="d-flex flex-row fs-12">
+                                        <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span
+                                                class="ml-1">Like</span></div>
+                                        <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span>
+                                        </div>
+                                        <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-light p-2">
+                                    <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
+                                                                                        src="https://i.imgur.com/RpzrMR2.jpg"
+                                                                                        width="40"><textarea
+                                            class="form-control ml-1 shadow-none textarea"></textarea></div>
+                                    <div class="mt-2 text-right">
+                                        <button class="btn btn-primary btn-sm shadow-none" type="button">Post comment</button>
+                                        <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!---->
+
+            <!---->
+
+        </div>
+        <div>
+           <button class="btn btn-warning"><a th:if="${pictureList.hasPrevious()}"
+               th:href="@{/blog/home(page=${pictureList.number -1},keyWord=${keyWord})}">Previous</a></button>
+            <span th:text="${pictureList.number+1}"></span>/
+            <span th:text="${pictureList.totalPages}"></span>
+            <button class="btn btn-warning"><a th:if="${pictureList.hasNext()}"
+               th:href="@{/blog/home(page=${pictureList.number + 1},keyWord=${keyWord})}">next</a></button>
+        </div>
+
+
+        <!-- end of templatemo_main -->
+
+    </div>
+</div>
+
+<!--&lt;!&ndash; commnet&ndash;&gt; start-->
+
+<!--<div class="container mt-5">-->
+<!--   -->
+<!--</div>-->
+<div id="templatemo_footer">
+    Copyright © 1996 <a href="#">luôn luôn lắng nghe</a> |
+    <a href="http://www.iwebsitetemplate.com" target="_parent">lâu lâu mới hiểu</a> <a
+        href="http://www.templatemo.com" target="_parent">by codegym C1121G1</a>
+</div>
+
+<script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
+</script>
+</body>
+
+
+</html>
