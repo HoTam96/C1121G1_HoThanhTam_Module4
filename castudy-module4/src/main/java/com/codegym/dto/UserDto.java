@@ -13,7 +13,7 @@ public class UserDto {
     private String passWord;
 
     public UserDto() {
-
+        this.passWord="123";
     }
 
     public String getUserName() {

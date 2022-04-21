@@ -113,6 +113,12 @@ public class CustomerController {
         return modelAndView;
     }
 
+    @GetMapping("/home")
+    public String getHome(){
+         return "homePage";
+
+    }
+
 
 
 

@@ -79,7 +79,7 @@
             <td><a style="color: darkviolet" class="fas far fa-trash-alt delete_btn"
                    data-mdb-toggle="modal" data-mdb-target="#deleteModal" th:data-id="${itemp.id}"></a></td>
 
-            <td><a style="color: chartreuse" class="far fa-edit" th:href="@{/furama/showEdit/{id}(id=${itemp.id})}"></a>
+            <td><a style="color: chartreuse" class="far fa-edit" th:href="@{/employee/showEdit/{id}(id=${itemp.id})}"></a>
             </td>
 
         </tr>
@@ -112,17 +112,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">xóa khách hàng </h5>
+                <h5 class="modal-title" id="staticBackdropLabel">xóa nhân viên </h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-                <!--                <input type="hidden" id="customerDelete_id" name="customer_id">-->
+
             </div>
-            <h4>bạn có muốn xóa khách hàng này không?</h4>
-            <div class="modal-body" id="customer_delete">
+            <h4>bạn có muốn xóa nhân viên này không?</h4>
+            <div class="modal-body" id="employee_delete">
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="delete_customer_id">ok</button>
+                <button type="button" class="btn btn-primary" id="delete_employee_id">ok</button>
             </div>
         </div>
     </div>
@@ -144,23 +144,25 @@
 <script>
     $(document).on("click", ".delete_btn", function () {
         let a = $(this);
-        let customerIdDelete = a.attr("data-id");
+        let employeeIdDelete = a.attr("data-id");
+        console.log(employeeIdDelete);
         $.ajax({
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             type: 'GET',
-            url: 'http://localhost:8080/furama/customer/' + customerIdDelete,
+            url: 'http://localhost:8080/furama/employee/' + employeeIdDelete,
             success: function (result) {
                 let outHtml = "";
                 outHtml += `
                 <p style="color: red;font-size: 20px">${result.name}</p>
-                <p style="color: red;font-size: 20px">${result.customerCode}</p>
-                <input id="customerDelete_id" type="hidden" value="${result.id}">
+                <p style="color: red;font-size: 20px">${result.position.positionName}</p>
+                <p style="color: red;font-size: 20px">${result.division.divisionName}</p>
+                <input id="employeeDelete_id" type="hidden" value="${result.id}">
 
               `
-                $('#customer_delete').html(outHtml);
+                $('#employee_delete').html(outHtml);
 
 
             }
@@ -168,15 +170,15 @@
         });
 
     });
-    $(document).on("click", "#delete_customer_id", function () {
-        let id = $('#customerDelete_id').val();
+    $(document).on("click", "#delete_employee_id", function () {
+        let id = $('#employeeDelete_id').val();
         $.ajax({
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             type: 'DELETE',
-            url: 'http://localhost:8080/furama/customer/delete/' + id,
+            url: 'http://localhost:8080/furama/employee/delete/' + id,
             success: function (data) {
                 location.reload();
 

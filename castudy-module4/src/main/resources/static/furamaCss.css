@@ -1,12 +1,14 @@
 #login{
     display: flex;
-    justify-content: flex-end;
-
-}
-
-ul li {
     list-style: none;
+    margin-left: 80px;
+
 }
+.login__item{
+   margin-left: 50px;
+}
+
+
 #menu-main{
    padding-top:10px;
 }
