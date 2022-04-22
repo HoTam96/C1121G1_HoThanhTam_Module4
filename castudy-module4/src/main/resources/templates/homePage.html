@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -29,12 +29,12 @@
 <body style="background-attachment: fixed;background-position: center center;background-repeat: no-repeat;background-size: cover; background-image:  url('https://bitly.com.vn/dfbwxw'); width: 100%; object-fit: cover">
 
 <!--menu header-->
-<div style="background-color:" class="container-fluid">
+<div style="background-color:#ccbdbc" class="container-fluid">
 
     <div class="container" id="menu-main">
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-4">
-                <span class="logo" style="color: white; font-size: 30px">Tâm 88.com</span>
+                <span class="logo" style="color: #262626; font-size: 30px">KHẢI ONICHAN</span>
 
             </div>
 
@@ -92,7 +92,7 @@
                     </li>
                     <li class="button__icon">
                         <i data-mdb-toggle="tooltip" data-mdb-placement="top" title="chuyến bay">
-                            <i style="color: #ccbdbc" class="fas fa-plane"></i>
+                            <i style="color: #f1f1f1" class="fas fa-plane"></i>
                         </i>
                         <button style="color: white" type="button" class="btn btn-outline-primary btn-rounded"
                                 data-mdb-ripple-color="dark"><a href="#">chuyến bay</a>
@@ -145,6 +145,50 @@
 
 
 </div>
+<div class="container">
+
+<!--    <div class="dropdown">-->
+<!--        <button-->
+<!--                class="btn btn-primary dropdown-toggle"-->
+<!--                type="button"-->
+<!--                id="dropdownMenuButton"-->
+<!--                data-mdb-toggle="dropdown"-->
+<!--                aria-expanded="false">-->
+<!--            FACILITY-->
+<!--        </button>-->
+<!--        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--            <li>-->
+<!--                <a th:each="itemp : ${serviceTypeList}" th:value="${itemp.id}",-->
+<!--                   th:text="${itemp.serviceTypeName}"  class="dropdown-item"  th:href="@{/facility/createService}"></a>-->
+<!--            </li>-->
+
+<!--        </ul>-->
+
+        <button class="btn btn-primary" type="button" >
+            <a style="color: black" class="delete_btn"
+               data-mdb-toggle="modal" data-mdb-target="#deleteModal">FACILITY</a>
+        </button>
+<!--    th:data-id="${itemp.id}-->
+
+
+    <button class="btn btn-primary" type="button" >
+        <a href="/employee/list" style="color: #262626">EMPLOYEE</a>
+    </button>
+
+        <button class="btn btn-primary" type="button" >
+           <a href="/furama/list" style="color: #262626"> CUSTOMER</a>
+        </button>
+        <button class="btn btn-primary" type="button" >
+           <a href="/contract/create" style="color: #262626"> CONTRACT</a>
+        </button>
+    <button class="btn btn-primary" type="button" >
+        <a href="/contract/detail" style="color: #262626"> CONTRACT DETAIL</a>
+    </button>
+    </div>
+<!--    -->
+
+
+</div>
 
 
 <!--phần content-->
@@ -191,6 +235,35 @@
 
 <!-- MDB -->
 
+
+<!--modal-->
+<div
+        class="modal fade"
+        id="deleteModal"
+        data-mdb-backdrop="static"
+        data-mdb-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">CHỌN LOẠI DỊCH VỤ </h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                <!--                <input type="hidden" id="customerDelete_id" name="customer_id">-->
+            </div>
+
+            <div class="modal-footer">
+<!--                <button type="button"  data-mdb-dismiss="modal">Close</button>-->
+<!--                <button type="button" class="btn btn-primary" id="delete_customer_id">ok</button>-->
+                <button th:each="itemp : ${serviceTypeList}" class="btn btn-secondary">
+                    <a th:href="@{/facility/createService/{id}(id=${itemp.id})}" th:text="${itemp.serviceTypeName}"></a></button>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <script
         type="text/javascript"

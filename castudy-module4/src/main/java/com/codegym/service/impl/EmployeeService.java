@@ -41,6 +41,11 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
+    public List<Employee> findByAll() {
+        return iEmployeeRepository.findAll();
+    }
+
+    @Override
     public void save(Employee customer) {
         iEmployeeRepository.save(customer);
     }

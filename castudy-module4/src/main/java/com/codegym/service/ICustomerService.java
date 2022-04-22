@@ -13,6 +13,7 @@ public interface ICustomerService {
     Page<Customer> findByAllCustomer(Pageable pageable, String name);
 
     Customer findById(Integer id);
+    List<Customer>findByAll();
 
     void save(Customer customer);
     void update(Customer customer);

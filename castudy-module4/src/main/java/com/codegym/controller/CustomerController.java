@@ -35,7 +35,7 @@ public class CustomerController {
 
         Page<Customer> customerPage = iCustomerService.findByAllCustomer(pageable, keyWordValue);
         ModelAndView modelAndView = new ModelAndView("customer/ListCustomer", "list", customerPage);
-        modelAndView.addObject("keyWord",keyWordValue);
+        modelAndView.addObject("keyWord", keyWordValue);
         return modelAndView;
 
     }
@@ -64,7 +64,7 @@ public class CustomerController {
     @PostMapping("/save")
     public ModelAndView save(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        if (bindingResult.hasFieldErrors()){
+        if (bindingResult.hasFieldErrors()) {
             modelAndView.setViewName("customer/create");
             List<CustomerType> customerTypeList = iCustomerService.findByAllCustomerType();
             modelAndView.addObject("customerTypeList", customerTypeList);
@@ -95,9 +95,9 @@ public class CustomerController {
     }
 
     @PostMapping("/saveEdit")
-    public ModelAndView saveEdit(@Valid @ModelAttribute CustomerDto customerDto , BindingResult bindingResult) {
+    public ModelAndView saveEdit(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        if (bindingResult.hasFieldErrors()){
+        if (bindingResult.hasFieldErrors()) {
             modelAndView.setViewName("customer/edit");
             List<CustomerType> customerTypeList = iCustomerService.findByAllCustomerType();
             modelAndView.addObject("customerTypeList", customerTypeList);
@@ -112,13 +112,6 @@ public class CustomerController {
         modelAndView.setViewName("redirect:/furama/list");
         return modelAndView;
     }
-
-    @GetMapping("/home")
-    public String getHome(){
-         return "homePage";
-
-    }
-
 
 
 

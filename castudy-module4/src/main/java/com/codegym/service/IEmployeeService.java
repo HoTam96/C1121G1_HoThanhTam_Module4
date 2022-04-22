@@ -15,6 +15,7 @@ public interface IEmployeeService {
     Page<Employee> findByAllCustomer(Pageable pageable, String name);
 
     Employee findById(Integer id);
+    List<Employee>findByAll();
 
     void save(Employee employee);
     void update(Employee employee);

@@ -17,11 +17,9 @@
 }
 
 .button__icon{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    font-size: 13px;
-    margin-right: 10px;
+    list-style: none;
+    margin-left: 70px;
+
 }
 .button__icon a{
     font-size: 8px;

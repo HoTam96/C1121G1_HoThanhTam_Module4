@@ -34,18 +34,21 @@
         <div class="row">
             <div class="col-lg-12 col-md-12" style="text-align:  center">
 
-                <form class7="text-center border border-light p-5" th:action="@{/employee/saveEdit}"
-                      th:object="${employeeDto}" method="post">
+                <form class7="text-center border border-light p-5" th:action="@{/furama/saveEdit}"
+                      th:object="${customerDto}" method="post">
 
-                    <p class="h4 mb-4" style="color: black">CHỈNH SỬA THÔNG TIN NHÂN VIÊN</p>
+                    <p class="h4 mb-4" style="color: black">CHỈNH SỬA THÔNG TIN KHÁCH HÀNG</p>
 
-                    <h4 style="color: red">nhân viên là ô xin </h4>
+                    <h4 style="color: red">khách hàng là thượng đế</h4>
 
                     <p>
-                        <button class="btn btn-warning"><a href="/employee/list">về trang chủ</a></button>
+                        <button class="btn btn-warning"><a href="/furama/list">về trang chủ</a></button>
                     </p>
 
-                    <input hidden class="form-control mb-4" placeholder="id" th:field="*{id}">
+                    <input readonly class="form-control mb-4" placeholder="mã khách hàng" th:field="*{customerCode}">
+                    <span class="loi" style="color: red" th:errors="*{customerCode}"></span>
+
+                    <input hidden class="form-control mb-4" placeholder="mã khách hàng" th:field="*{id}">
 
                     <input id="defaultSubscriptionFormEmail" class="form-control mb-4" placeholder="tên"
                            th:field="*{name}">
@@ -54,41 +57,27 @@
                     <input type="date" class="form-control mb-4" placeholder="ngày sinh" th:field="*{dateOfBirth}">
                     <span class="loi" style="color: red"  th:errors="*{dateOfBirth}"></span>
 
+                    <select th:field="*{gender}"  style="font-size: 15px ; margin-right: 500px ; position : relative ; margin-bottom: 10px"
+                            class="browser-default custom-select form-control mb-4">
+                        <option th:each="itemp : ${gender}" th:value="${itemp.toString()}"th:text="${itemp.toString()}">
+
+                        </option>
+                    </select>
+
                     <input class="form-control mb-4" placeholder="chứng minh nhân dân" th:field="*{idCard}">
                     <span class="loi" style="color: red"  th:errors="*{idCard}"></span>
 
                     <input class="form-control mb-4" placeholder="số điện thoại" th:field="*{phone}">
                     <span class="loi" style="color: red"  th:errors="*{phone}"></span>
 
-                    <input class="form-control mb-4" placeholder="lương" th:field="*{salary}">
-                    <span class="loi" style="color: red"  th:errors="*{salary}"></span>
-
                     <input type="email" class="form-control mb-4" placeholder="E-mail" th:field="*{email}">
-
                     <input class="form-control mb-4" placeholder="địa chỉ" th:field="*{address}">
-
-                    <select th:field="*{position}"  style="font-size: 15px ; margin-right: 500px ; position : relative ; margin-bottom: 10px"
+                    <select th:field="*{customerType}"  style="font-size: 15px ; margin-right: 500px ; position : relative ; margin-bottom: 10px"
                             class="browser-default custom-select form-control mb-4">
-                        <option th:each="itemp : ${positionList}" th:value="${itemp.id}"th:text="${itemp.getPositionName()}">
+                        <option th:each="itemp : ${customerTypeList}" th:value="${itemp.id}"th:text="${itemp.customerTypeName}">
 
                         </option>
                     </select>
-
-                    <select th:field="*{educationDegree}"  style="font-size: 15px ; margin-right: 500px ; position : relative ; margin-bottom: 10px"
-                            class="browser-default custom-select form-control mb-4">
-                        <option th:each="itemp : ${educationDegreeList}" th:value="${itemp.id}"th:text="${itemp.getEducationDegreeName()}">
-
-                        </option>
-                    </select>
-
-                    <select th:field="*{division}"  style="font-size: 15px ; margin-right: 500px ; position : relative ; margin-bottom: 10px"
-                            class="browser-default custom-select form-control mb-4">
-                        <option th:each="itemp : ${divisionList}" th:value="${itemp.id}"th:text="${itemp.getDivisionName()}">
-
-                        </option>
-                    </select>
-
-                    <input  readonly type="text" class="form-control mb-4" placeholder="tài khoản" th:field ="*{userDto.userName}">
 
                     <button class="btn btn-info btn-block" type="submit">lưu</button>
 

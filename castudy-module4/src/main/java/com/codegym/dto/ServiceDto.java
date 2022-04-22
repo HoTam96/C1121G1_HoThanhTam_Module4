@@ -1,19 +1,20 @@
-package com.codegym.model.service;
+package com.codegym.dto;
 
-import com.codegym.model.contract.Contract;
+import com.codegym.model.service.RentType;
+import com.codegym.model.service.ServiceType;
 
-import javax.persistence.*;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
-@Entity
-public class Service {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ServiceDto {
+
     private Integer id;
+    @NotBlank
     private String serviceCode;
     @NotNull
     private String name;
+
     private Integer ServiceArea;
     @NotNull
     private Double serviceCost;
@@ -22,19 +23,9 @@ public class Service {
     private String descriptionOther;
     private Double poolArea;
     private Integer numberFloor;
-    private String freeService;
-    @ManyToOne
-    @JoinColumn(name = "rentType_id", referencedColumnName = "id")
     private RentType rentType;
-    @JoinColumn(name = "serviceType_id", referencedColumnName = "id")
-    @ManyToOne
     private ServiceType serviceType;
-
-    @OneToMany(mappedBy = "service")
-    private Set<Contract> contracts;
-
-    public Service() {
-    }
+    private String freeService;
 
     public Integer getId() {
         return id;
@@ -130,14 +121,6 @@ public class Service {
 
     public void setServiceType(ServiceType serviceType) {
         this.serviceType = serviceType;
-    }
-
-    public Set<Contract> getContracts() {
-        return contracts;
-    }
-
-    public void setContracts(Set<Contract> contracts) {
-        this.contracts = contracts;
     }
 
     public String getFreeService() {

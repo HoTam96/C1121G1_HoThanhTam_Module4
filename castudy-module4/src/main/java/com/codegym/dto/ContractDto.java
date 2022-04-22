@@ -1,4 +1,4 @@
-package com.codegym.model.contract;
+package com.codegym.dto;
 
 import com.codegym.model.customer.Customer;
 import com.codegym.model.detail.ContractDetail;
@@ -10,35 +10,26 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
-@Entity
-public class Contract {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id ;
+public class ContractDto {
+    private Integer id;
     @NotNull
-    private  String startDate;
-
-    @NotBlank
     private String contractCode;
-    @NotNull
+    @NotBlank
+    private String startDate;
+    @NotBlank
     private String endDate;
     @NotNull
     private Double deposite;
     @NotNull
     private Double totalMoney;
-    @ManyToOne
-    @JoinColumn(name = "employee_id",referencedColumnName = "id")
-    private Employee employee;
-    @ManyToOne
-    @JoinColumn(name = "customer_id",referencedColumnName = "id")
-    private Customer customer;
-    @ManyToOne
-    @JoinColumn(name = "service_id",referencedColumnName = "id")
-    private Service service ;
-    @OneToMany(mappedBy = "contract")
-    private Set<ContractDetail>contractDetails;
 
-    public Contract() {
+    private Employee employee;
+
+    private Customer customer;
+
+    private Service service;
+
+    public ContractDto() {
     }
 
     public Integer getId() {
@@ -103,14 +94,6 @@ public class Contract {
 
     public void setService(Service service) {
         this.service = service;
-    }
-
-    public Set<ContractDetail> getContractDetails() {
-        return contractDetails;
-    }
-
-    public void setContractDetails(Set<ContractDetail> contractDetails) {
-        this.contractDetails = contractDetails;
     }
 
     public String getContractCode() {
