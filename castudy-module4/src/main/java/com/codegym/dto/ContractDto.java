@@ -1,16 +1,15 @@
 package com.codegym.dto;
 
 import com.codegym.model.customer.Customer;
-import com.codegym.model.detail.ContractDetail;
+
 import com.codegym.model.employee.Employee;
 import com.codegym.model.service.Service;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
-public class ContractDto {
+
+public class ContractDto{
     private Integer id;
     @NotNull
     private String contractCode;

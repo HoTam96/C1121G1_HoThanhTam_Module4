@@ -55,10 +55,10 @@
                     <!--tên dịch vụ-->
                     <input id="defaultSubscriptionFormEmail" class="form-control mb-4" placeholder="tên dịch vụ"
                            th:field="*{name}">
-                    <span class="loi" style="color: red" th:errors="*{name}"></span>
+                    <span class="loi text-danger " style="color: red" th:errors="*{name}">(*)</span>
                     <!--mã dịnh vụ-->
                     <input type="text" class="form-control mb-4" placeholder="mã dịch vụ" th:field="*{serviceCode}">
-                    <span class="loi" style="color: red" th:errors="*{serviceCode}"></span>
+                    <span class="loi text-danger" style="color: red" th:errors="*{serviceCode}"></span>
                     <!--diện tích sử dụng-->
                     <input type="text" class="form-control mb-4" placeholder="diện tích sử dụng"
                            th:field="*{serviceArea}">

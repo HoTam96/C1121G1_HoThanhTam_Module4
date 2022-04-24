@@ -1,6 +1,7 @@
 package com.codegym.service;
 
 
+import com.codegym.dto.CustomerUsedServiceDto;
 import com.codegym.model.customer.Customer;
 import com.codegym.model.customer.CustomerType;
 import org.springframework.data.domain.Page;
@@ -20,5 +21,5 @@ public interface ICustomerService {
 
     List<CustomerType> findByAllCustomerType();
 
-
+    Page<CustomerUsedServiceDto> findByCustomerUsedService(Pageable pageable, String name);
 }

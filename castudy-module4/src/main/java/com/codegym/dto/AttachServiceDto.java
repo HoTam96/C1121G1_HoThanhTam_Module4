@@ -1,15 +1,9 @@
-package com.codegym.model.detail;
+package com.codegym.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
-@Entity
-public class AttachService {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class AttachServiceDto {
+
     private Integer id;
     @NotNull
     private String attachServiceName;
@@ -17,12 +11,10 @@ public class AttachService {
     private Double attachServiceCost;
     @NotNull
     private String unit;
+
     private String status;
-    @OneToMany(mappedBy = "attachService")
 
-    private Set<ContractDetail> contractDetails;
-
-    public AttachService() {
+    public AttachServiceDto() {
     }
 
     public Integer getId() {
@@ -63,13 +55,5 @@ public class AttachService {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Set<ContractDetail> getContractDetails() {
-        return contractDetails;
-    }
-
-    public void setContractDetails(Set<ContractDetail> contractDetails) {
-        this.contractDetails = contractDetails;
     }
 }

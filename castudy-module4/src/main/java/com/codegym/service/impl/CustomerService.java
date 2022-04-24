@@ -1,9 +1,11 @@
 package com.codegym.service.impl;
 
+import com.codegym.dto.CustomerUsedServiceDto;
 import com.codegym.model.customer.Customer;
 import com.codegym.model.customer.CustomerType;
 import com.codegym.repository.ICustomerRepository;
 import com.codegym.repository.ICustomerTypeRepository;
+import com.codegym.repository.ICustomerUsedServiceRepository;
 import com.codegym.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,9 @@ public class CustomerService implements ICustomerService {
 
     @Autowired
     private ICustomerTypeRepository iCustomerTypeRepository;
+
+    @Autowired
+    private ICustomerUsedServiceRepository iCustomerUsedServiceRepository;
 
 
     @Override
@@ -47,11 +52,17 @@ public class CustomerService implements ICustomerService {
     }
 
 
-
     @Override
     public List<CustomerType> findByAllCustomerType() {
         return iCustomerTypeRepository.findAll();
 
 
     }
+
+    @Override
+    public Page<CustomerUsedServiceDto> findByCustomerUsedService(Pageable pageable, String name) {
+        return iCustomerUsedServiceRepository.findAllByCustomerNameContaining(pageable, name);
+    }
+
+
 }

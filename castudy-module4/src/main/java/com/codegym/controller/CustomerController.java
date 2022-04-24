@@ -1,6 +1,7 @@
 package com.codegym.controller;
 
 import com.codegym.dto.CustomerDto;
+import com.codegym.dto.CustomerUsedServiceDto;
 import com.codegym.model.customer.Customer;
 import com.codegym.model.customer.CustomerType;
 import com.codegym.service.ICustomerService;
@@ -64,6 +65,9 @@ public class CustomerController {
     @PostMapping("/save")
     public ModelAndView save(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
+        CustomerDto customerDtoError = new CustomerDto();
+        customerDtoError.setiCustomerService(iCustomerService);
+        customerDtoError.validate(customerDto, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             modelAndView.setViewName("customer/create");
             List<CustomerType> customerTypeList = iCustomerService.findByAllCustomerType();
@@ -113,6 +117,17 @@ public class CustomerController {
         return modelAndView;
     }
 
+    @GetMapping("/customerUsed")
+    public ModelAndView getCustomerUsedService(@PageableDefault(value = 3) Pageable pageable,
+                                               @RequestParam Optional<String> keyWord) {
+
+        String keyWordValue = keyWord.orElse("");
+//x        Page<Customer>customerUsedPage = iCustomerService.findByCustomerUsedService(pageable,keyWordValue);
+        Page<CustomerUsedServiceDto> customerUsedPage = iCustomerService.findByCustomerUsedService(pageable, keyWordValue);
+        ModelAndView modelAndView = new ModelAndView("customerUsedService/list", "customerUsedPage", customerUsedPage);
+        return modelAndView;
+
+    }
 
 
 }
