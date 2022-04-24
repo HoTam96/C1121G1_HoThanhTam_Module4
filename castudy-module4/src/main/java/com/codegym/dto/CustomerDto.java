@@ -3,7 +3,6 @@ package com.codegym.dto;
 import com.codegym.model.contract.Contract;
 import com.codegym.model.customer.Customer;
 import com.codegym.model.customer.CustomerType;
-import com.codegym.repository.ICustomerRepository;
 import com.codegym.service.ICustomerService;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -15,14 +14,15 @@ import java.util.Set;
 
 public class CustomerDto implements Validator {
     @NotBlank(message = " tên không được để trống")
+    @Pattern(regexp = "^$|(^[\\p{Lu}\\p{Ll}\\s]+$)")
     private String name;
     @NotBlank(message = " ngày sinh không được để trống")
     private String dateOfBirth;
     @NotBlank(message = "CMND không được để trống")
-    @Pattern(regexp = "^(([0-9]{9})|([0-9]{12}))$", message = "CMND phải đúng định dạng XXXXXXXXX hoặc XXXXXXXXXXXX ")
+    @Pattern(regexp = "^$|(^(([0-9]{9})|([0-9]{12}))$)", message = "CMND phải đúng định dạng XXXXXXXXX hoặc XXXXXXXXXXXX ")
     private String idCard;
     @NotBlank(message = "không được để trống")
-    @Pattern(regexp = "(^$|(090|091|(\\+(84)90)|(\\+(84)91))([0-9]{7}))",message = "số điện thoại sai định dạng")
+    @Pattern(regexp = "(^$|(090|091|(\\+(84)90)|(\\+(84)91))([0-9]{7}))", message = "số điện thoại sai định dạng")
     private String phone;
     @NotBlank(message = "email không được để trống")
     @Pattern(regexp = "^$|(^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$)", message = "email phải đúng định dạng")
@@ -161,4 +161,5 @@ public class CustomerDto implements Validator {
         }
 
     }
+
 }

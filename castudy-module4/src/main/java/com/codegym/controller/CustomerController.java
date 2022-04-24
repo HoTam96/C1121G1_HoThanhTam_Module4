@@ -101,6 +101,9 @@ public class CustomerController {
     @PostMapping("/saveEdit")
     public ModelAndView saveEdit(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
+        CustomerDto customerDtoError = new CustomerDto();
+        customerDtoError.setiCustomerService(iCustomerService);
+        customerDtoError.validate(customerDto, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             modelAndView.setViewName("customer/edit");
             List<CustomerType> customerTypeList = iCustomerService.findByAllCustomerType();

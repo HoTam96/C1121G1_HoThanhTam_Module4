@@ -1,31 +1,41 @@
 package com.codegym.dto;
 
 import com.codegym.model.service.RentType;
+import com.codegym.model.service.Service;
 import com.codegym.model.service.ServiceType;
+import com.codegym.service.IFacilityService;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.util.List;
 
-public class ServiceDto {
+public class ServiceDto implements Validator {
 
     private Integer id;
-    @NotBlank
+    @NotBlank(message = "mã dịch vụ không được để trống")
+    @Pattern(regexp = "^$|((HO-)[0-9]{4})")
     private String serviceCode;
-    @NotNull
+    @NotBlank(message = "tên dịch vụ không được để trống")
     private String name;
-
     private Integer ServiceArea;
-    @NotNull
+    @NotNull(message = "không được để trống")
     private Double serviceCost;
     private Integer serviceMaxPeople;
     private String standardRoom;
     private String descriptionOther;
     private Double poolArea;
+//    @NotNull(message = "không được để trống")
+//    @Pattern(regexp = "^(^$|([0]*[1-9][0-9]*)|[1-9][0-9]*$)")
     private Integer numberFloor;
     private RentType rentType;
     private ServiceType serviceType;
     private String freeService;
+    private IFacilityService iFacilityService;
+
 
     public Integer getId() {
         return id;
@@ -129,5 +139,31 @@ public class ServiceDto {
 
     public void setFreeService(String freeService) {
         this.freeService = freeService;
+    }
+
+    public IFacilityService getiFacilityService() {
+        return iFacilityService;
+    }
+
+    public void setiFacilityService(IFacilityService iFacilityService) {
+        this.iFacilityService = iFacilityService;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        ServiceDto serviceDto = (ServiceDto) target;
+        List<Service>serviceList = iFacilityService.findByAllService();
+        for (Service element: serviceList) {
+            if (element.getServiceCode().equals(serviceDto.serviceCode)){
+                errors.rejectValue("serviceCode","service.code","mã dịch vụ đã tồn tại");
+            }
+        }
+
+
     }
 }

@@ -68,6 +68,9 @@ public class FacilityController {
     @PostMapping("/save")
     public ModelAndView save(@Valid @ModelAttribute ServiceDto serviceDto, BindingResult bindingResult) {
         Service service = new Service();
+        ServiceDto serviceErorrDto = new ServiceDto();
+        serviceErorrDto.setiFacilityService(iFacilityService);
+        serviceErorrDto.validate(serviceDto,bindingResult);
         Integer id = serviceDto.getServiceType().getId();
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasFieldErrors()) {

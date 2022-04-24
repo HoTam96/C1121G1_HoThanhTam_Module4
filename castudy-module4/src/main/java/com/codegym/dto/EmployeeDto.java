@@ -2,30 +2,41 @@ package com.codegym.dto;
 import com.codegym.model.employee.Division;
 import com.codegym.model.employee.EducationDegree;
 import com.codegym.model.employee.Position;
-import com.codegym.model.user.User;
+
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class EmployeeDto {
-    @NotBlank
+
+    @NotBlank(message = " tên không được để trống")
+    @Pattern(regexp = "^$|(^[\\p{Lu}\\p{Ll}\\s]+$)")
     private String name;
     @NotBlank
     private String dateOfBirth;
-    @NotBlank
+    @NotBlank(message = "CMND không được để trống")
+    @Pattern(regexp = "^$|(^(([0-9]{9})|([0-9]{12}))$)", message = "CMND phải đúng định dạng XXXXXXXXX hoặc XXXXXXXXXXXX ")
     private String idCard;
-    @NotBlank
+    @NotBlank(message = "không được để trống")
+    @Pattern(regexp = "(^$|(090|091|(\\+(84)90)|(\\+(84)91))([0-9]{7}))", message = "số điện thoại sai định dạng")
     private String phone;
+    @NotBlank(message = "email không được để trống")
+    @Pattern(regexp = "^$|(^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$)", message = "email phải đúng định dạng")
     private String email;
     private String address;
     private Boolean flag;
     private Integer id;
+    @NotNull(message = "không được để trống")
+    @Pattern(regexp = "^$|(^[0-9]+(\\.?\\d+)?)")
     private Double salary;
     private Position position;
     private EducationDegree educationDegree;
     private Division division;
     @Valid
     private UserDto userDto;
+
 
     public EmployeeDto() {
     }
