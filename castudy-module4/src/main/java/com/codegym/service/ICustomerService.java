@@ -21,5 +21,5 @@ public interface ICustomerService {
 
     List<CustomerType> findByAllCustomerType();
 
-    Page<CustomerUsedServiceDto> findByCustomerUsedService(Pageable pageable, String name);
+    Page<ICustomerUsedServiceDto> findByCustomerUsedService(Pageable pageable, String name);
 }

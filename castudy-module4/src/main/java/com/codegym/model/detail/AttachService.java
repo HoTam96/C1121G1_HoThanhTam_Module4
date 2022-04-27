@@ -14,7 +14,8 @@ public class AttachService {
     @NotNull
     private String attachServiceName;
     @NotNull
-    private Double attachServiceCost;
+    @Column(columnDefinition = "double")
+    private String attachServiceCost;
     @NotNull
     private String unit;
     private String status;
@@ -41,11 +42,11 @@ public class AttachService {
         this.attachServiceName = attachServiceName;
     }
 
-    public Double getAttachServiceCost() {
+    public String getAttachServiceCost() {
         return attachServiceCost;
     }
 
-    public void setAttachServiceCost(Double attachServiceCost) {
+    public void setAttachServiceCost(String attachServiceCost) {
         this.attachServiceCost = attachServiceCost;
     }
 

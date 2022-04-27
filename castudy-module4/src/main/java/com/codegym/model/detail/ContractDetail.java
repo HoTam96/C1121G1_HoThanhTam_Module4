@@ -11,6 +11,7 @@ public class ContractDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull
+    @Column(columnDefinition = "int")
     private Integer quantity;
     @ManyToOne
     @JoinColumn(name = "contract_id", referencedColumnName = "id")

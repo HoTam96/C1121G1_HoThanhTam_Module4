@@ -2,9 +2,10 @@ package com.codegym.model.employee;
 
 import com.codegym.model.Person;
 import com.codegym.model.contract.Contract;
-import com.codegym.model.user.User;
+import com.codegym.model.user.AppUser;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
@@ -12,7 +13,9 @@ public class Employee extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Double salary;
+    @NotBlank(message = "không được để trống")
+    @Column(columnDefinition = "double")
+    private String salary;
     @ManyToOne
     @JoinColumn(name = "position_Id", referencedColumnName = "id")
     private Position position;
@@ -22,9 +25,9 @@ public class Employee extends Person {
     @ManyToOne
     @JoinColumn(name = "divisionId", referencedColumnName = "id")
     private Division division;
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_Nane",referencedColumnName = "userName")
-    private User user;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    private AppUser user;
 
     @OneToMany(mappedBy = "employee")
     private Set<Contract>contracts;
@@ -41,11 +44,11 @@ public class Employee extends Person {
         this.id = id;
     }
 
-    public Double getSalary() {
+    public String getSalary() {
         return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(String salary) {
         this.salary = salary;
     }
 
@@ -73,11 +76,11 @@ public class Employee extends Person {
         this.division = division;
     }
 
-    public User getUser() {
+    public AppUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(AppUser user) {
         this.user = user;
     }
 

@@ -9,13 +9,16 @@ import com.codegym.service.IFacilityService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/facility")
@@ -44,13 +47,6 @@ public class FacilityController {
         return free;
     }
 
-    @GetMapping("/home")
-    public ModelAndView getHome() {
-        ModelAndView modelAndView = new ModelAndView("homePage");
-        List<ServiceType> serviceTypeList = iFacilityService.getAll();
-        modelAndView.addObject("serviceTypeList", serviceTypeList);
-        return modelAndView;
-    }
 
     @GetMapping("/createService/{id}")
     public ModelAndView CreateNewService(@PathVariable("id") Integer serviceTypeId) {
@@ -73,7 +69,31 @@ public class FacilityController {
         serviceErorrDto.validate(serviceDto,bindingResult);
         Integer id = serviceDto.getServiceType().getId();
         ModelAndView modelAndView = new ModelAndView();
-        if (bindingResult.hasFieldErrors()) {
+        BeanPropertyBindingResult beanPropertyBindingResult = (BeanPropertyBindingResult) bindingResult;
+
+
+        if (id ==2){
+            List<FieldError>errorList = beanPropertyBindingResult.getFieldErrors().stream()
+                    .filter(fer -> !fer.getField().equals("poolArea")).collect(Collectors.toList());
+            beanPropertyBindingResult = new BeanPropertyBindingResult(serviceDto,"serviceDto");
+
+            for (FieldError fieldError : errorList) {
+                beanPropertyBindingResult.addError(fieldError);
+            }
+
+        }
+        if (id==3){
+            List<FieldError>errorList = beanPropertyBindingResult.getFieldErrors().stream()
+                    .filter(fer -> !fer.getField().equals("numberFloor")).collect(Collectors.toList());
+            beanPropertyBindingResult = new BeanPropertyBindingResult(serviceDto,"serviceDto");
+
+            for (FieldError fieldError : errorList) {
+                beanPropertyBindingResult.addError(fieldError);
+            }
+
+        }
+
+        if (beanPropertyBindingResult.hasFieldErrors()) {
             modelAndView.addObject("serviceDto", serviceDto);
             modelAndView.addObject("rentTypeList", rentTypeList());
             modelAndView.addObject("serviceTypeId", id);

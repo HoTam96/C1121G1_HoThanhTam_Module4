@@ -23,9 +23,11 @@ public class Contract {
     @NotNull
     private String endDate;
     @NotNull
-    private Double deposite;
+    @Column(columnDefinition = "double")
+    private String deposite;
     @NotNull
-    private Double totalMoney;
+    @Column(columnDefinition = "double")
+    private String totalMoney;
     @ManyToOne
     @JoinColumn(name = "employee_id",referencedColumnName = "id")
     private Employee employee;
@@ -57,6 +59,14 @@ public class Contract {
         this.startDate = startDate;
     }
 
+    public String getContractCode() {
+        return contractCode;
+    }
+
+    public void setContractCode(String contractCode) {
+        this.contractCode = contractCode;
+    }
+
     public String getEndDate() {
         return endDate;
     }
@@ -65,19 +75,19 @@ public class Contract {
         this.endDate = endDate;
     }
 
-    public Double getDeposite() {
+    public String getDeposite() {
         return deposite;
     }
 
-    public void setDeposite(Double deposite) {
+    public void setDeposite(String deposite) {
         this.deposite = deposite;
     }
 
-    public Double getTotalMoney() {
+    public String getTotalMoney() {
         return totalMoney;
     }
 
-    public void setTotalMoney(Double totalMoney) {
+    public void setTotalMoney(String totalMoney) {
         this.totalMoney = totalMoney;
     }
 
@@ -111,13 +121,5 @@ public class Contract {
 
     public void setContractDetails(Set<ContractDetail> contractDetails) {
         this.contractDetails = contractDetails;
-    }
-
-    public String getContractCode() {
-        return contractCode;
-    }
-
-    public void setContractCode(String contractCode) {
-        this.contractCode = contractCode;
     }
 }

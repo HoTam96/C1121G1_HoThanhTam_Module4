@@ -8,8 +8,13 @@ import com.codegym.model.employee.Division;
 import com.codegym.model.employee.EducationDegree;
 import com.codegym.model.employee.Employee;
 import com.codegym.model.employee.Position;
-import com.codegym.model.user.User;
+import com.codegym.model.user.AppRole;
+import com.codegym.model.user.AppUser;
+import com.codegym.model.user.UserRole;
+import com.codegym.repository.IApproleRepository;
+import com.codegym.repository.IUserRoleRepository;
 import com.codegym.service.IEmployeeService;
+import com.codegym.util.EncrytedPasswordUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,6 +36,10 @@ import java.util.Optional;
 public class EmployeeController {
     @Autowired
     private IEmployeeService iEmployeeService;
+    @Autowired
+    private IUserRoleRepository iUserRoleRepository;
+    @Autowired
+    private IApproleRepository iApproleRepository;
 
 
     @GetMapping("/list")
@@ -76,11 +85,32 @@ public class EmployeeController {
         employee.setPosition(employeeDto.getPosition());
         employee.setEducationDegree(employeeDto.getEducationDegree());
         employee.setDivision(employeeDto.getDivision());
-        User user = new User();
+        AppUser user = new AppUser();
         user.setUserName(employeeDto.getUserDto().getUserName());
+        String decoPassWord = EncrytedPasswordUtils.encrytePassword(employeeDto.getUserDto().getPassWord());
+        user.setPassWord(decoPassWord);
+
         employee.setUser(user);
         employee.setFlag(true);
         iEmployeeService.save(employee);
+        UserRole userRole = new UserRole();
+        AppRole appRole = new AppRole();
+        if (employee.getPosition().getId() == 1 || employee.getPosition().getId() == 2) {
+            List<AppRole> appRoleList = iApproleRepository.findAll();
+            userRole.setUser(user);
+            appRole.setId(appRoleList.get(0).getId());
+            appRole.setRoleName(appRoleList.get(0).getRoleName());
+            userRole.setRole(appRole);
+            iUserRoleRepository.save(userRole);
+        }else {
+            List<AppRole> appRoleList = iApproleRepository.findAll();
+            userRole.setUser(user);
+            appRole.setId(appRoleList.get(1).getId());
+            appRole.setRoleName(appRoleList.get(1).getRoleName());
+            userRole.setRole(appRole);
+            iUserRoleRepository.save(userRole);
+        }
+
         modelAndView.setViewName("redirect:/employee/list");
         return modelAndView;
     }
@@ -89,7 +119,7 @@ public class EmployeeController {
     public ModelAndView showEdit(@PathVariable("id") Integer id) {
         Employee employee = iEmployeeService.findById(id);
         EmployeeDto employeeDto = new EmployeeDto();
-        BeanUtils.copyProperties(employee,employeeDto );
+        BeanUtils.copyProperties(employee, employeeDto);
         UserDto userDto = new UserDto();
         userDto.setUserName(employee.getUser().getUserName());
         employeeDto.setUserDto(userDto);
@@ -105,9 +135,9 @@ public class EmployeeController {
     }
 
     @PostMapping("/saveEdit")
-    public ModelAndView saveEdit(@Valid @ModelAttribute EmployeeDto employeeDto , BindingResult bindingResult) {
+    public ModelAndView saveEdit(@Valid @ModelAttribute EmployeeDto employeeDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        if (bindingResult.hasFieldErrors()){
+        if (bindingResult.hasFieldErrors()) {
             modelAndView.setViewName("employee/edit");
             List<Position> positionList = iEmployeeService.findByAllPosition();
             List<Division> divisionList = iEmployeeService.findByAllDivision();
@@ -125,8 +155,9 @@ public class EmployeeController {
         employee.setPosition(employeeDto.getPosition());
         employee.setEducationDegree(employeeDto.getEducationDegree());
         employee.setDivision(employeeDto.getDivision());
-        User user = new User();
+        AppUser user = new AppUser();
         user.setUserName(employeeDto.getUserDto().getUserName());
+        user.setPassWord(employeeDto.getUserDto().getPassWord());
         employee.setUser(user);
         employee.setFlag(true);
 

@@ -6,12 +6,17 @@ import com.codegym.model.customer.Customer;
 import com.codegym.model.employee.Employee;
 import com.codegym.model.service.Service;
 import com.codegym.service.IContractService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.swing.text.DateFormatter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -25,11 +30,11 @@ public class ContractDto implements Validator {
     @NotBlank
     private String endDate;
     @NotNull(message = "khống được để trống")
-    @Pattern(regexp = "^$|([1-9](\\.?[0-9]+)?)|0\\.[1-9]+")
-    private Double deposite;
+    @Pattern(regexp = "^([1-9](.?[0-9]+)?)|0.[1-9]+$")
+    private String deposite;
     @NotNull(message = "khống được để trống")
-    @Pattern(regexp = "^$|([1-9](\\.?[0-9]+)?)|0\\.[1-9]+")
-    private Double totalMoney;
+    @Pattern(regexp = "^([1-9](.?[0-9]+)?)|0.[1-9]+$")
+    private String totalMoney;
 
     private Employee employee;
 
@@ -50,6 +55,14 @@ public class ContractDto implements Validator {
         this.id = id;
     }
 
+    public String getContractCode() {
+        return contractCode;
+    }
+
+    public void setContractCode(String contractCode) {
+        this.contractCode = contractCode;
+    }
+
     public String getStartDate() {
         return startDate;
     }
@@ -66,19 +79,19 @@ public class ContractDto implements Validator {
         this.endDate = endDate;
     }
 
-    public Double getDeposite() {
+    public String getDeposite() {
         return deposite;
     }
 
-    public void setDeposite(Double deposite) {
+    public void setDeposite(String deposite) {
         this.deposite = deposite;
     }
 
-    public Double getTotalMoney() {
+    public String getTotalMoney() {
         return totalMoney;
     }
 
-    public void setTotalMoney(Double totalMoney) {
+    public void setTotalMoney(String totalMoney) {
         this.totalMoney = totalMoney;
     }
 
@@ -106,14 +119,6 @@ public class ContractDto implements Validator {
         this.service = service;
     }
 
-    public String getContractCode() {
-        return contractCode;
-    }
-
-    public void setContractCode(String contractCode) {
-        this.contractCode = contractCode;
-    }
-
     public IContractService getiContractService() {
         return iContractService;
     }
@@ -137,5 +142,17 @@ public class ContractDto implements Validator {
                 errors.rejectValue("contractCode", "contract.code","mã hợp đồng đã tồn tại");
             }
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate date2 = LocalDate.parse(contractDto.endDate,formatter);
+        LocalDate now = LocalDate.now();
+        LocalDate date1 = LocalDate.parse(contractDto.startDate,formatter);
+
+      if (date1.compareTo(date2)>0){
+          errors.rejectValue("startDate","end.day","ngày kết thúc hợp đồng ko được nhỏ hơn ngày ");
+      }if (date1.isBefore(now)){
+          errors.rejectValue("endDate","end.day","ngày bắt đầu không được nhỏ hơn ngày hiện tại");
+
+        }
+
     }
 }

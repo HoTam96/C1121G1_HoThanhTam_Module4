@@ -1,19 +1,12 @@
 package com.codegym.dto;
 
-import com.codegym.model.employee.Employee;
-import com.codegym.model.user.UseRole;
-
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.Set;
-
 public class UserDto {
 
     private String userName;
     private String passWord;
 
     public UserDto() {
-        this.passWord="123";
+
     }
 
     public String getUserName() {

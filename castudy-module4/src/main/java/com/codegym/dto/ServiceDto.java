@@ -8,6 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -23,19 +24,25 @@ public class ServiceDto implements Validator {
     private String name;
     private Integer ServiceArea;
     @NotNull(message = "không được để trống")
-    private Double serviceCost;
-    private Integer serviceMaxPeople;
+    @Pattern(regexp = "^$|(([1-9](\\.?[0-9]+)?)|0\\.[1-9]+)",message = "diện tích sử dụng phải là số")
+    private String serviceCost;
+    @Pattern(regexp = "^(^$|([0]*[1-9][0-9]*)|[1-9][0-9]*$)",message = "chi phí phải là số")
+    private String serviceMaxPeople;
     private String standardRoom;
     private String descriptionOther;
-    private Double poolArea;
-//    @NotNull(message = "không được để trống")
-//    @Pattern(regexp = "^(^$|([0]*[1-9][0-9]*)|[1-9][0-9]*$)")
-    private Integer numberFloor;
+    @NotBlank(message = "không để trống")
+    @Pattern(regexp = "^$|(([1-9](\\.?[0-9]+)?)|0\\.[1-9]+)")
+    private String poolArea;
+    @NotNull(message = "không được để trống")
+    @Pattern(regexp = "^(^$|([0]*[1-9][0-9]*)|[1-9][0-9]*$)", message = "số tầng phải là số dương")
+    private String numberFloor;
     private RentType rentType;
     private ServiceType serviceType;
     private String freeService;
     private IFacilityService iFacilityService;
 
+    public ServiceDto() {
+    }
 
     public Integer getId() {
         return id;
@@ -69,19 +76,19 @@ public class ServiceDto implements Validator {
         ServiceArea = serviceArea;
     }
 
-    public Double getServiceCost() {
+    public String getServiceCost() {
         return serviceCost;
     }
 
-    public void setServiceCost(Double serviceCost) {
+    public void setServiceCost(String serviceCost) {
         this.serviceCost = serviceCost;
     }
 
-    public Integer getServiceMaxPeople() {
+    public String getServiceMaxPeople() {
         return serviceMaxPeople;
     }
 
-    public void setServiceMaxPeople(Integer serviceMaxPeople) {
+    public void setServiceMaxPeople(String serviceMaxPeople) {
         this.serviceMaxPeople = serviceMaxPeople;
     }
 
@@ -101,19 +108,19 @@ public class ServiceDto implements Validator {
         this.descriptionOther = descriptionOther;
     }
 
-    public Double getPoolArea() {
+    public String getPoolArea() {
         return poolArea;
     }
 
-    public void setPoolArea(Double poolArea) {
+    public void setPoolArea(String poolArea) {
         this.poolArea = poolArea;
     }
 
-    public Integer getNumberFloor() {
+    public String getNumberFloor() {
         return numberFloor;
     }
 
-    public void setNumberFloor(Integer numberFloor) {
+    public void setNumberFloor(String numberFloor) {
         this.numberFloor = numberFloor;
     }
 

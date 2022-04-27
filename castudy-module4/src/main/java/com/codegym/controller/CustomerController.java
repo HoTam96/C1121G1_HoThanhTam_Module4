@@ -5,10 +5,13 @@ import com.codegym.dto.CustomerUsedServiceDto;
 import com.codegym.model.customer.Customer;
 import com.codegym.model.customer.CustomerType;
 import com.codegym.service.ICustomerService;
+import com.codegym.service.ICustomerUsedServiceDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -121,13 +124,16 @@ public class CustomerController {
     }
 
     @GetMapping("/customerUsed")
-    public ModelAndView getCustomerUsedService(@PageableDefault(value = 3) Pageable pageable,
+    public ModelAndView getCustomerUsedService(@PageableDefault(value = 3 , sort = "id",direction = Sort.Direction.DESC) Pageable pageable,
                                                @RequestParam Optional<String> keyWord) {
 
         String keyWordValue = keyWord.orElse("");
-//x        Page<Customer>customerUsedPage = iCustomerService.findByCustomerUsedService(pageable,keyWordValue);
-        Page<CustomerUsedServiceDto> customerUsedPage = iCustomerService.findByCustomerUsedService(pageable, keyWordValue);
+        System.out.println(keyWordValue);
+//         Page<Customer>customerUsedPage = iCustomerService.findByCustomerUsedService(pageable,keyWordValue);
+        Page<ICustomerUsedServiceDto> customerUsedPage =
+                iCustomerService.findByCustomerUsedService(PageRequest.of(pageable.getPageNumber(), 3),keyWordValue);
         ModelAndView modelAndView = new ModelAndView("customerUsedService/list", "customerUsedPage", customerUsedPage);
+       modelAndView.addObject("keyWord",keyWordValue);
         return modelAndView;
 
     }

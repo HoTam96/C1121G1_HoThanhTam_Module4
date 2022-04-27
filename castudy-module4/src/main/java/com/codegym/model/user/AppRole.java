@@ -4,15 +4,18 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Role {
+@Table( uniqueConstraints = {
+                @UniqueConstraint(name = "APP_ROLE_UK", columnNames = "role_name") })
+public class AppRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "role_name")
     private String roleName;
     @OneToMany(mappedBy = "role")
-    private Set<UseRole> useRoles;
+    private Set<UserRole> useRoles;
 
-    public Role() {
+    public AppRole() {
     }
 
     public Integer getId() {
@@ -31,11 +34,11 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public Set<UseRole> getUseRoles() {
+    public Set<UserRole> getUseRoles() {
         return useRoles;
     }
 
-    public void setUseRoles(Set<UseRole> useRoles) {
+    public void setUseRoles(Set<UserRole> useRoles) {
         this.useRoles = useRoles;
     }
 }

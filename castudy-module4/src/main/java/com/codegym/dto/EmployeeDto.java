@@ -23,14 +23,13 @@ public class EmployeeDto {
     @Pattern(regexp = "(^$|(090|091|(\\+(84)90)|(\\+(84)91))([0-9]{7}))", message = "số điện thoại sai định dạng")
     private String phone;
     @NotBlank(message = "email không được để trống")
-    @Pattern(regexp = "^$|(^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$)", message = "email phải đúng định dạng")
     private String email;
     private String address;
     private Boolean flag;
     private Integer id;
     @NotNull(message = "không được để trống")
-    @Pattern(regexp = "^$|(^[0-9]+(\\.?\\d+)?)")
-    private Double salary;
+    @Pattern(regexp = "^$|(([1-9](\\.?[0-9]+)?)|0\\.[1-9]+)")
+    private String salary;
     private Position position;
     private EducationDegree educationDegree;
     private Division division;
@@ -105,11 +104,11 @@ public class EmployeeDto {
         this.id = id;
     }
 
-    public Double getSalary() {
+    public String getSalary() {
         return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(String salary) {
         this.salary = salary;
     }
 

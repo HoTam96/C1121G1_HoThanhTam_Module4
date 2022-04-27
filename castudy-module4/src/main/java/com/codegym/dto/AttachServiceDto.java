@@ -8,7 +8,7 @@ public class AttachServiceDto {
     @NotNull
     private String attachServiceName;
     @NotNull
-    private Double attachServiceCost;
+    private String attachServiceCost;
     @NotNull
     private String unit;
 
@@ -33,11 +33,11 @@ public class AttachServiceDto {
         this.attachServiceName = attachServiceName;
     }
 
-    public Double getAttachServiceCost() {
+    public String getAttachServiceCost() {
         return attachServiceCost;
     }
 
-    public void setAttachServiceCost(Double attachServiceCost) {
+    public void setAttachServiceCost(String attachServiceCost) {
         this.attachServiceCost = attachServiceCost;
     }
 

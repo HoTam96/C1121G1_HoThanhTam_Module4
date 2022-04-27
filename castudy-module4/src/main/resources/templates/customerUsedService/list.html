@@ -27,13 +27,13 @@
 <body>
 <div class="container">
 
-    <button style="margin-top: 30px ; position: relative" class="btn btn-success"><a href="/furama/createCustomer">create
-        new Customer</a></button>
+    <!--    <button style="margin-top: 30px ; position: relative" class="btn btn-success"><a href="/furama/createCustomer">create-->
+    <!--        new Customer</a></button>-->
 
-    <button style="margin-top: 30px ; position: relative" class="btn btn-success"><a href="/furama/home">back home
+    <button style="margin-top: 30px ; position: relative" class="btn btn-success"><a href="/home">back home
     </a></button>
 
-    <form method="get" action="/furama/list">
+    <form method="get" action="/furama/customerUsed">
     <div class="input-group" style="display: flex; justify-content: flex-end">
         <div class="form-outline">
             <input name="keyWord" th:value="${keyWord}" type="search" id="form1" class="form-control"/>
@@ -69,12 +69,12 @@
         <tr class="table-info" th:each="itemp , loop : ${customerUsedPage}">
             <td th:text="${loop.count}"></td>
             <td th:text="${itemp.customerCode}"></td>
-            <td th:text="${itemp.customerName}"></td>
+            <td th:text="${itemp.name}"></td>
             <td th:text="${itemp.contractCode}"></td>
             <td th:text="${itemp.serviceName}"></td>
             <td th:text="${itemp.serviceCode}"></td>
             <td th:text="${itemp.attachServiceName}"></td>
-            <td th:text="${itemp.quality}"></td>
+            <td th:text="${itemp.quantity}"></td>
             <td th:text="${itemp.unit}"></td>
             <td th:text="${itemp.totalPayment}"></td>
             <td><a style="color: darkviolet" class="fas far fa-trash-alt delete_btn"
@@ -86,17 +86,15 @@
 
         </tbody>
     </table>
-<!--    <div>-->
-<!--        <button class="btn btn-success"  th:if="${list.hasPrevious()}">-->
-<!--            <a th:href="@{/furama/list(page=${list.number - 1},keyWord=${keyWord})}">Previous</a></button>-->
-<!--        <span th:text="${list.number+1}"></span>/-->
-<!--        <span th:text="${list.totalPages}"></span>-->
-<!--        <button class="btn btn-success"  th:if="${list.hasNext()}">-->
-<!--            <a th:href="@{/furama/list(page=${list.number + 1},keyWord=${keyWord})}">next</a>-->
-<!--        </button>-->
-<!--    </div>-->
-
-
+    <div>
+        <button class="btn btn-success"  th:if="${customerUsedPage.hasPrevious()}">
+            <a th:href="@{/furama/customerUsed(page=${customerUsedPage.number - 1},keyWord=${keyWord})}">Previous</a></button>
+        <span th:text="${customerUsedPage.number+1}"></span>/
+        <span th:text="${customerUsedPage.totalPages}"></span>
+        <button class="btn btn-success"  th:if="${customerUsedPage.hasNext()}">
+            <a th:href="@{/furama/customerUsed(page=${customerUsedPage.number + 1},keyWord=${keyWord})}">next</a>
+        </button>
+    </div>
 </div>
 
 

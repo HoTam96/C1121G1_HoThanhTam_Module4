@@ -9,7 +9,7 @@ public class ContractDetailDto {
 
     private Integer id;
     @NotNull
-    private Integer quantity;
+    private String quantity;
 
     private Contract contract;
 
@@ -26,11 +26,11 @@ public class ContractDetailDto {
         this.id = id;
     }
 
-    public Integer getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 

@@ -1,11 +1,10 @@
-package com.example.service;
+package com.codegym.service.impl;
 
 
-import com.example.model.AppUser;
-
-import com.example.model.UserRole;
-import com.example.repository.AppUserRepository;
-import com.example.repository.UserRoleRepository;
+import com.codegym.model.user.AppUser;
+import com.codegym.model.user.UserRole;
+import com.codegym.repository.IUserRepository;
+import com.codegym.repository.IUserRoleRepository;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +21,15 @@ import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-        @Autowired
-            private AppUserRepository appUserRepository;
+    @Autowired
+    private IUserRepository iUserRepository;
 
-        @Autowired
-        private UserRoleRepository appRoleRepository;
+    @Autowired
+    private IUserRoleRepository iUserRoleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        AppUser appUser = this.appUserRepository.findByUserName(userName);
+        AppUser appUser = this.iUserRepository.findByUserName(userName);
 
         if (appUser == null) {
             System.out.println("User not found! " + userName);
@@ -40,24 +39,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         System.out.println("Found User: " + appUser);
 
         // [ROLE_USER, ROLE_ADMIN,..]
-        List<UserRole> roleNames = this.appRoleRepository.findByAppUser(appUser);
+        List<UserRole> roleNames = this.iUserRoleRepository.findByUser(appUser);
 
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
         if (roleNames != null) {
             for (UserRole userRole : roleNames) {
                 // ROLE_USER, ROLE_ADMIN,..
-                GrantedAuthority authority = new SimpleGrantedAuthority(userRole.getAppRole().getRoleName());
+                GrantedAuthority authority = new SimpleGrantedAuthority(userRole.getRole().getRoleName());
                 grantList.add(authority);
             }
         }
 
         UserDetails userDetails = (UserDetails) new User(appUser.getUserName(),
-                appUser.getEncrytedPassword(), grantList);
-
+                appUser.getPassWord(), grantList);
 
         return userDetails;
     }
-
 
 
 }
